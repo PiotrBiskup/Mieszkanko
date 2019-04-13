@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mieszkanko</string>
+    <string name="title_home">Schedule</string>
+    <string name="title_dashboard">Shopping</string>
+    <string name="title_notifications">Statistics</string>
+    <string name="title_profile">Profile</string>
+</resources>
