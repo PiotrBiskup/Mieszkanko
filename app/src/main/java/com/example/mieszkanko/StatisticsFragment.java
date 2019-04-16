@@ -14,7 +14,7 @@ public class StatisticsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("tagus", "stat fragment");
+
         return inflater.inflate(R.layout.fragment_statistics, null);
     }
 }

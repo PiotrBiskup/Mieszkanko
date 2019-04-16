@@ -28,7 +28,6 @@ public class ShoppingListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("tagus", "wchodze do on create view! w shopping");
         View view = inflater.inflate(R.layout.fragment_shopping_list, null);
 
         mViewPager = view.findViewById(R.id.fragment_container_shopping);

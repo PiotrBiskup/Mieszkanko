@@ -14,7 +14,7 @@ public class ToBuyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("tagus", "to buy fragment");
+
         return inflater.inflate(R.layout.fragment_shopping_list_to_buy, null);
     }
 }

@@ -14,7 +14,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("tagus", "profile fragment");
+
         return inflater.inflate(R.layout.fragment_profile, null);
     }
 

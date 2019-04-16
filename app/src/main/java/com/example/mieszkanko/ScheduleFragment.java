@@ -14,7 +14,7 @@ public class ScheduleFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("tagus", "schedule fragment");
+
         return inflater.inflate(R.layout.fragment_schedule, null);
     }
 }
