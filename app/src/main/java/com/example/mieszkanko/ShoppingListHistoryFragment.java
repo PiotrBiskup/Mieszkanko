@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ScheduleFragment extends Fragment {
+public class ShoppingListHistoryFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("tagus", "schedule fragment");
-        return inflater.inflate(R.layout.fragment_schedule, null);
+        Log.d("tagus", "history fragment");
+        return inflater.inflate(R.layout.fragment_shopping_list_history, null);
     }
 }
