@@ -7,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.example.mieszkanko.BottomNavigationBarFragments.ProfileFragment;
+import com.example.mieszkanko.BottomNavigationBarFragments.ScheduleFragment;
+import com.example.mieszkanko.BottomNavigationBarFragments.ShoppingListFragment;
+import com.example.mieszkanko.BottomNavigationBarFragments.StatisticsFragment;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
+
 
             return true;
         }
