@@ -1,4 +1,4 @@
-package com.example.mieszkanko;
+package com.example.mieszkanko.BottomNavigationBarFragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ShoppingListHistoryFragment extends Fragment {
+import com.example.mieszkanko.R;
+
+public class ProfileFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_shopping_list_history, null);
+        return inflater.inflate(R.layout.fragment_profile, null);
     }
+
 }

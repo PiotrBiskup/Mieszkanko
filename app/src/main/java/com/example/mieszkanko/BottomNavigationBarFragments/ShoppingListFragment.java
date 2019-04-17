@@ -1,4 +1,4 @@
-package com.example.mieszkanko;
+package com.example.mieszkanko.BottomNavigationBarFragments;
 
 
 import android.os.Bundle;
@@ -6,17 +6,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mieszkanko.R;
+import com.example.mieszkanko.Adapter.SectionsPageAdapter;
+import com.example.mieszkanko.ShoppingFragments.ShoppingListHistoryFragment;
+import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
+
 public class ShoppingListFragment extends Fragment {
 
-
-    private SectionsShoppingPageAdapter mSectionsShoppingPageAdapter;
     private ViewPager mViewPager;
 
     @Override
@@ -40,7 +41,7 @@ public class ShoppingListFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        SectionsShoppingPageAdapter adapter = new SectionsShoppingPageAdapter(getChildFragmentManager());
+        SectionsPageAdapter adapter = new SectionsPageAdapter(getChildFragmentManager());
         adapter.addFragment(new ToBuyFragment(), "To buy");
         adapter.addFragment(new ShoppingListHistoryFragment(), "History");
         viewPager.setAdapter(adapter);
