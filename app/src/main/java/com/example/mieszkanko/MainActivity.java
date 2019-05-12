@@ -1,23 +1,41 @@
 package com.example.mieszkanko;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.mieszkanko.BottomNavigationBarFragments.ProfileFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ScheduleFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ShoppingListFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.StatisticsFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+    public List<String> productsNameToBuyList;
+    public List<String> productsDescriptionToBuyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        productsNameToBuyList = new ArrayList<>();
+        productsNameToBuyList.add("Papier toaletowy");
+        productsNameToBuyList.add("Olej");
+        productsNameToBuyList.add("Mop");
+
+        productsDescriptionToBuyList = new ArrayList<>();
+        productsDescriptionToBuyList.add("opis papier toaletowy");
+        productsDescriptionToBuyList.add("opis olej");
+        productsDescriptionToBuyList.add("opis mop");
 
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -63,4 +81,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         return loadFragment(fragment);
     }
+
+    public void hideKeyboard()
+    {
+        //hide keyboard
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
 }
