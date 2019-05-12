@@ -7,23 +7,6 @@
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/TextViewMy"
-        android:layout_width="137dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="tu ma być cusz"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail"
-        app:layout_constraintVertical_bias="0.202" />
-
-    <TextView
         android:id="@+id/detail"
         android:layout_width="312dp"
         android:layout_height="96dp"
