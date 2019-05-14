@@ -16,7 +16,7 @@ public class ShoppingList {
     private List<Purchased> purchased = null;
     @SerializedName("to_buy")
     @Expose
-    private List<String> toBuy = null;
+    private List<Product> toBuy = null;
 
     public String getApart() {
         return apart;
@@ -34,11 +34,11 @@ public class ShoppingList {
         this.purchased = purchased;
     }
 
-    public List<String> getToBuy() {
+    public List<Product> getToBuy() {
         return toBuy;
     }
 
-    public void setToBuy(List<String> toBuy) {
+    public void setToBuy(List<Product> toBuy) {
         this.toBuy = toBuy;
     }
 

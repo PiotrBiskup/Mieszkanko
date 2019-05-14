@@ -21,13 +21,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.mieszkanko.Models.User;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -53,7 +51,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ApiException;
 
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 //import com.google.firebase.quickstart.auth.R;
@@ -123,9 +121,7 @@ public class LoginActivity extends AppCompatActivity implements
                     // it exists!
                 }else{
                     // does not exist
-                    List<String> listka = new ArrayList<String>(){{add("Ala");}};
-                    User newUser = new User(listka, "Ciastek");
-                    mUsersRef.child(currentUserID).setValue(newUser);
+                    mUsersRef.child(currentUserID).setValue("Czarek");
                 }
             }
 
@@ -159,7 +155,6 @@ public class LoginActivity extends AppCompatActivity implements
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("messageUserId", user.getUid());
                             startActivity(intent);
 
                         } else {
