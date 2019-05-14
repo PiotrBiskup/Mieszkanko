@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.MainActivity;
 import com.example.mieszkanko.R;
 
@@ -28,8 +29,8 @@ import java.util.List;
 
 public class ToBuyFragment extends Fragment {
 
-    List<String> productsList;
-    List<String> descriptionList;
+//    List<String> productsList;
+//    List<String> descriptionList;
 
     EditText productNameEdit;
     EditText descriptionEdit;
@@ -43,9 +44,6 @@ public class ToBuyFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_shopping_list_to_buy, null);
 
-        productsList = ((MainActivity)getActivity()).productsNameToBuyList;
-        descriptionList = ((MainActivity)getActivity()).productsDescriptionToBuyList;
-
         productNameEdit = view.findViewById(R.id.productNameEditText);
         descriptionEdit = view.findViewById(R.id.descriptionEditText);
         addProductImage = view.findViewById(R.id.addProductImageView);
@@ -58,31 +56,28 @@ public class ToBuyFragment extends Fragment {
         addProductImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                // productNameEdit.getText(); - nazwa produktu ktory dodajemy do bazy
-                // descriptionEdit.getText(); - opis produktu ktory dodajemy do bazy
-                //dodawanie do bazy i odswiezenie listy
-
-                descriptionEdit.onEditorAction(EditorInfo.IME_ACTION_DONE);
-
                 if(productNameEdit.getText().toString().length() != 0)
                 {
-                    productsList.add(0, productNameEdit.getText().toString());
 
-                    if(descriptionEdit.getText().toString().length() != 0)
-                        descriptionList.add(0, descriptionEdit.getText().toString());
-                    else
-                        descriptionList.add(0, "No description");
+                    String productName = productNameEdit.getText().toString();
+                    String productDescription = descriptionEdit.getText().toString();
 
+                    if(productDescription.length() == 0) {
+                        productDescription = "No description";
+                    }
+
+                    AccountSettings.addToToBuyList(productName, productDescription);
+                    descriptionEdit.getText().clear();
+                    productNameEdit.getText().clear();
 
                 } else {
-                    Toast.makeText(getActivity(), "Enter product name.",
+                    Toast.makeText(getActivity(), "Enter product name",
                             Toast.LENGTH_LONG).show();
                 }
 
 
                 ((MainActivity)getActivity()).hideKeyboard();
-                descriptionEdit.getText().clear();
-                productNameEdit.getText().clear();
+
 
             }
         });
@@ -94,7 +89,7 @@ public class ToBuyFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return productsList.size();
+            return AccountSettings.getProductsNameToBuyList().size();
         }
 
         @Override
@@ -112,8 +107,8 @@ public class ToBuyFragment extends Fragment {
             convertView = getLayoutInflater().inflate(R.layout.to_buy_list_custom_layout, null);
             TextView productName = convertView.findViewById(R.id.productNameTextView);
             TextView description = convertView.findViewById(R.id.productDescriptionTextView);
-            productName.setText(productsList.get(position));
-            description.setText(descriptionList.get(position));
+            productName.setText(AccountSettings.getProductsNameToBuyList().get(position));
+            description.setText(AccountSettings.getProductsDescriptionToBuyList().get(position));
 
             return convertView;
         }
