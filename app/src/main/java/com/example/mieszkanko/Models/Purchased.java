@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Purchased {
 
-    @SerializedName("item")
-    @Expose
-    private String item;
     @SerializedName("buyer")
     @Expose
     private String buyer;
@@ -20,12 +17,10 @@ public class Purchased {
     @Expose
     private Double price;
 
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
+    public Purchased(String buyer, String name, Double price) {
+        this.buyer = buyer;
+        this.name = name;
+        this.price = price;
     }
 
     public String getBuyer() {

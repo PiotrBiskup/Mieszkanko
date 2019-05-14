@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     DatabaseReference mRootRef;
 
+    String userIdOfThisUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mRootRef = FirebaseDatabase.getInstance().getReference().child("users");
 
+        Bundle bundle = getIntent().getExtras();
+        userIdOfThisUser = bundle.getString("messageUserId");
 
         productsNameToBuyList = new ArrayList<>();
         productsNameToBuyList.add("Papier toaletowy");
