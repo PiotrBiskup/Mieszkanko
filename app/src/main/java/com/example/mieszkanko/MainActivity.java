@@ -1,5 +1,6 @@
 package com.example.mieszkanko;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,37 +12,38 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.BottomNavigationBarFragments.ProfileFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ScheduleFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ShoppingListFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.StatisticsFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    public List<String> productsNameToBuyList;
-    public List<String> productsDescriptionToBuyList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        productsNameToBuyList = new ArrayList<>();
-        productsNameToBuyList.add("Papier toaletowy");
-        productsNameToBuyList.add("Olej");
-        productsNameToBuyList.add("Mop");
+        //get settings from database
 
-        productsDescriptionToBuyList = new ArrayList<>();
-        productsDescriptionToBuyList.add("opis papier toaletowy");
-        productsDescriptionToBuyList.add("opis olej");
-        productsDescriptionToBuyList.add("opis mop");
+        AccountSettings.getHistoryProductsName().add("Chleb");
+        AccountSettings.getHistoryProductsPrice().add(3.50);
+        AccountSettings.getHistoryProductsDate().add(new Date());
+        AccountSettings.getHistoryProductsBuyer().add("Piotrus");
+
 
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+
 
         loadFragment(new ScheduleFragment());
     }
