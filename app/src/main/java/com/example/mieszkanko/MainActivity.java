@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -54,11 +53,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        userIdOfThisUser = bundle.getString("messageUserId");
 
         //get settings from database
-
-        AccountSettings.getHistoryProductsName().add("Chleb");
-        AccountSettings.getHistoryProductsPrice().add(3.50);
-        AccountSettings.getHistoryProductsDate().add(new Date());
-        AccountSettings.getHistoryProductsBuyer().add("Piotrus");
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
@@ -122,18 +116,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mShoppingListRef.child("to_buy").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Product> list = new ArrayList<>();
+
+                List<Product> toBuyList = new ArrayList<>();
+
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Product prod = ds.getValue(Product.class);
-                    String name = prod.getName();
-                    String description = prod.getDescription();
-                    Log.d(TAG, "P  R   O   D  U   K   T: " + name + " + " + description);
-//                    list.add(userId + " / "  + keyId);
-//                    Log.d("TAG", userId + " / " +  keyId);
+                    toBuyList.add(prod);
                 }
-//                ListView listView = (ListView) findViewById(R.id.list_view);
-//                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, list);
-//                listView.setAdapter(arrayAdapter);
+
+                AccountSettings.getShoppingList().setToBuy(toBuyList);
+
             }
 
             @Override

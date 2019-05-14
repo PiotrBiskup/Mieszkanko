@@ -22,7 +22,10 @@ import android.widget.Toast;
 
 import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.MainActivity;
+import com.example.mieszkanko.Models.Product;
 import com.example.mieszkanko.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,8 @@ public class ToBuyFragment extends Fragment {
     EditText descriptionEdit;
     ImageView addProductImage;
 
+    DatabaseReference mRootRef;
+    DatabaseReference mShoppingListRef;
 
 
     @Nullable
@@ -43,6 +48,9 @@ public class ToBuyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_shopping_list_to_buy, null);
+
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+        mShoppingListRef = mRootRef.child("shopping_list");
 
         productNameEdit = view.findViewById(R.id.productNameEditText);
         descriptionEdit = view.findViewById(R.id.descriptionEditText);
@@ -66,7 +74,11 @@ public class ToBuyFragment extends Fragment {
                         productDescription = "No description";
                     }
 
-                    AccountSettings.addToToBuyList(productName, productDescription);
+                    Product product = new Product(productName, productDescription);
+                    DatabaseReference newRef = mShoppingListRef.child("to_buy").push();
+                    newRef.setValue(product);
+
+
                     descriptionEdit.getText().clear();
                     productNameEdit.getText().clear();
 
@@ -89,7 +101,7 @@ public class ToBuyFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return AccountSettings.getProductsNameToBuyList().size();
+            return AccountSettings.getShoppingList().getToBuy().size();
         }
 
         @Override
@@ -107,8 +119,8 @@ public class ToBuyFragment extends Fragment {
             convertView = getLayoutInflater().inflate(R.layout.to_buy_list_custom_layout, null);
             TextView productName = convertView.findViewById(R.id.productNameTextView);
             TextView description = convertView.findViewById(R.id.productDescriptionTextView);
-            productName.setText(AccountSettings.getProductsNameToBuyList().get(position));
-            description.setText(AccountSettings.getProductsDescriptionToBuyList().get(position));
+            productName.setText(AccountSettings.getShoppingList().getToBuy().get(position).getName());
+            description.setText(AccountSettings.getShoppingList().getToBuy().get(position).getDescription());
 
             return convertView;
         }

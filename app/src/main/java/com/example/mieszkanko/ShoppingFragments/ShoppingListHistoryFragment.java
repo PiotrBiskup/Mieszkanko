@@ -36,7 +36,7 @@ public class ShoppingListHistoryFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return AccountSettings.getHistoryProductsName().size();
+            return AccountSettings.getShoppingList().getPurchased().size();
         }
 
         @Override
@@ -58,10 +58,10 @@ public class ShoppingListHistoryFragment extends Fragment {
             TextView purchaseDate = convertView.findViewById(R.id.DateOfPurchaseTextView);
             TextView buyer = convertView.findViewById(R.id.BuyerTextView);
 
-            boughtProductName.setText(AccountSettings.getHistoryProductsName().get(position));
-            productPrice.setText(String.format ("%.2f", AccountSettings.getHistoryProductsPrice().get(position)) + " PLN");
-            purchaseDate.setText(AccountSettings.getHistoryProductsDate().get(position).toString());
-            buyer.setText(AccountSettings.getHistoryProductsBuyer().get(position));
+            boughtProductName.setText(AccountSettings.getShoppingList().getPurchased().get(position).getName());
+            productPrice.setText(String.format ("%.2f", AccountSettings.getShoppingList().getPurchased().get(position).getPrice()) + " PLN");
+            purchaseDate.setText(AccountSettings.getShoppingList().getPurchased().get(position).getPurchaseDate());
+            buyer.setText(AccountSettings.getShoppingList().getPurchased().get(position).getBuyer());
 
 
             return convertView;
