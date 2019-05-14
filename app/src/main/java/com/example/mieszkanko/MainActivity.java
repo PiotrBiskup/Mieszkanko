@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     toBuyList.add(prod);
                 }
 
+                Collections.reverse(toBuyList);
                 AccountSettings.getShoppingList().setToBuy(toBuyList);
 
             }
