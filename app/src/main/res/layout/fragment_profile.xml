@@ -1,13 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:text="Settings"
+    <!--<TextView-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"-->
+        <!--android:text="Settings"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+
+    <ImageView
+        android:id="@+id/imageViewProfile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+
+        app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+    <EditText
+        android:id="@+id/nickNameEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewProfile"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="150dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginRight="150dp"
+        android:gravity="center"
+        android:text="NickName"
+        android:focusable="false"
+
+        />
+
+    <TextView
+        android:id="@+id/textViewFlatNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nickNameEditText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/flat_name" />
+
 
 </RelativeLayout>

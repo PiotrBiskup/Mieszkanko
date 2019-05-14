@@ -1,5 +1,6 @@
 package com.example.mieszkanko;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,10 +11,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.BottomNavigationBarFragments.ProfileFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ScheduleFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ShoppingListFragment;
@@ -26,12 +29,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    public List<String> productsNameToBuyList;
-    public List<String> productsDescriptionToBuyList;
+
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
 
@@ -54,15 +57,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         productsNameToBuyList.add("Papier toaletowy");
         productsNameToBuyList.add("Olej");
         productsNameToBuyList.add("Mop");
+        //get settings from database
 
-        productsDescriptionToBuyList = new ArrayList<>();
-        productsDescriptionToBuyList.add("opis papier toaletowy");
-        productsDescriptionToBuyList.add("opis olej");
-        productsDescriptionToBuyList.add("opis mop");
-
+        AccountSettings.getHistoryProductsName().add("Chleb");
+        AccountSettings.getHistoryProductsPrice().add(3.50);
+        AccountSettings.getHistoryProductsDate().add(new Date());
+        AccountSettings.getHistoryProductsBuyer().add("Piotrus");
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+
 
         loadFragment(new ScheduleFragment());
     }
@@ -107,9 +112,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void hideKeyboard()
     {
-        //hide keyboard
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override
