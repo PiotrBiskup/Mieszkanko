@@ -42,6 +42,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ApiException;
+
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,12 +72,16 @@ public class LoginActivity extends AppCompatActivity implements
 
     private FirebaseAuth mAuth;
 
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mUsersRef = mRootRef.child("users");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-//        FirebaseApp.initializeApp(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+//        FirebaseApp.initializeApp(getApplicationContext());
 
         mStatusTextView = findViewById(R.id.status);
         mDetailTextView = findViewById(R.id.detail);
@@ -79,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements
         // [START config_signin]
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("854992248803-rgq49r3h0cqjifqvsg9s8gfrl2orfqh0.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         // [END config_signin]
@@ -97,6 +110,27 @@ public class LoginActivity extends AppCompatActivity implements
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+
+        final String currentUserID = currentUser.getUid();
+
+        mUsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(currentUserID)) {
+                    Log.d(TAG, "USER ALREADY EXISTS IN DATABASE XD");
+                    // it exists!
+                }else{
+                    // does not exist
+                    mUsersRef.child(currentUserID).setValue("Czarek");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -171,5 +205,12 @@ public class LoginActivity extends AppCompatActivity implements
         }
 
     }
+
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(base);
+//        MultiDex.install(this);
+//    }
+
 }
 

@@ -8,17 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Apartment {
 
-    @SerializedName("apart")
-    @Expose
     private String apart;
-    @SerializedName("interval")
-    @Expose
     private Integer interval;
-    @SerializedName("name")
-    @Expose
     private String name;
-    @SerializedName("rooms")
-    @Expose
     private List<Room> rooms = null;
 
     public String getApart() {

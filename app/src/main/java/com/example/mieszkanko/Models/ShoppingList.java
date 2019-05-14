@@ -2,21 +2,14 @@
 package com.example.mieszkanko.Models;
 
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 
 public class ShoppingList {
 
-    @SerializedName("apart")
-    @Expose
     private String apart;
-    @SerializedName("purchased")
-    @Expose
     private List<Purchased> purchased = null;
-    @SerializedName("to_buy")
-    @Expose
-    private List<String> toBuy = null;
+    private List<Product> toBuy = null;
 
     public String getApart() {
         return apart;
@@ -34,11 +27,11 @@ public class ShoppingList {
         this.purchased = purchased;
     }
 
-    public List<String> getToBuy() {
+    public List<Product> getToBuy() {
         return toBuy;
     }
 
-    public void setToBuy(List<String> toBuy) {
+    public void setToBuy(List<Product> toBuy) {
         this.toBuy = toBuy;
     }
 
