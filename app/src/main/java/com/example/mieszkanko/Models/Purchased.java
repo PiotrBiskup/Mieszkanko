@@ -2,17 +2,32 @@
 package com.example.mieszkanko.Models;
 
 
+import java.util.Date;
+
 public class Purchased {
 
 
     private String buyer;
     private String name;
     private Double price;
+    private String purchaseDate;
 
-    public Purchased(String buyer, String name, Double price) {
+    public String getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(String purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public Purchased(String buyer, String name, Double price, String date) {
         this.buyer = buyer;
         this.name = name;
         this.price = price;
+        this.purchaseDate = date;
+    }
+
+    public Purchased() {
     }
 
     public String getBuyer() {

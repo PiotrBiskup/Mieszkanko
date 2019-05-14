@@ -34,7 +34,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-
+    private static final String TAG = "MOJE INFO !!!!!";
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
@@ -50,13 +50,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
 
-        Bundle bundle = getIntent().getExtras();
-        userIdOfThisUser = bundle.getString("messageUserId");
+//        Bundle bundle = getIntent().getExtras();
+//        userIdOfThisUser = bundle.getString("messageUserId");
 
-        productsNameToBuyList = new ArrayList<>();
-        productsNameToBuyList.add("Papier toaletowy");
-        productsNameToBuyList.add("Olej");
-        productsNameToBuyList.add("Mop");
         //get settings from database
 
         AccountSettings.getHistoryProductsName().add("Chleb");
@@ -131,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     Product prod = ds.getValue(Product.class);
                     String name = prod.getName();
                     String description = prod.getDescription();
+                    Log.d(TAG, "P  R   O   D  U   K   T: " + name + " + " + description);
 //                    list.add(userId + " / "  + keyId);
 //                    Log.d("TAG", userId + " / " +  keyId);
                 }
