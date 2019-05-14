@@ -2,20 +2,13 @@
 package com.example.mieszkanko.Models;
 
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 
 public class ShoppingList {
 
-    @SerializedName("apart")
-    @Expose
     private String apart;
-    @SerializedName("purchased")
-    @Expose
     private List<Purchased> purchased = null;
-    @SerializedName("to_buy")
-    @Expose
     private List<Product> toBuy = null;
 
     public String getApart() {
