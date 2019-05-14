@@ -8,15 +8,22 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.mieszkanko.BottomNavigationBarFragments.ProfileFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ScheduleFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ShoppingListFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.StatisticsFragment;
+import com.example.mieszkanko.Models.Product;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public List<String> productsDescriptionToBuyList;
 
     DatabaseReference mRootRef;
+    DatabaseReference mShoppingListRef;
 
     String userIdOfThisUser;
 
@@ -36,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
 
 //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        mRootRef = FirebaseDatabase.getInstance().getReference().child("users");
+        mRootRef = FirebaseDatabase.getInstance().getReference();
+        mShoppingListRef = mRootRef.child("shopping_list");
 
         Bundle bundle = getIntent().getExtras();
         userIdOfThisUser = bundle.getString("messageUserId");
@@ -101,6 +110,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //hide keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mShoppingListRef.child("to_buy").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Product> list = new ArrayList<>();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Product prod = ds.getValue(Product.class);
+                    String name = prod.getName();
+                    String description = prod.getDescription();
+//                    list.add(userId + " / "  + keyId);
+//                    Log.d("TAG", userId + " / " +  keyId);
+                }
+//                ListView listView = (ListView) findViewById(R.id.list_view);
+//                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, list);
+//                listView.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
 //    @Override
