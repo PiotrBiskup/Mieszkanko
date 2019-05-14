@@ -1,20 +1,12 @@
 
 package com.example.mieszkanko.Models;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 
 public class Purchased {
 
-    @SerializedName("buyer")
-    @Expose
+
     private String buyer;
-    @SerializedName("name")
-    @Expose
     private String name;
-    @SerializedName("price")
-    @Expose
     private Double price;
 
     public Purchased(String buyer, String name, Double price) {

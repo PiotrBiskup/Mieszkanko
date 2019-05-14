@@ -1,19 +1,13 @@
 
 package com.example.mieszkanko.Models;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 public class Roomsschedule {
 
-    @SerializedName("room")
-    @Expose
+
     private String room;
-    @SerializedName("status")
-    @Expose
     private Boolean status;
-    @SerializedName("user")
-    @Expose
     private String user;
 
     public String getRoom() {

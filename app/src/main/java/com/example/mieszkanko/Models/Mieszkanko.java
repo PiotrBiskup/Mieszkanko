@@ -2,23 +2,15 @@
 package com.example.mieszkanko.Models;
 
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 
 public class Mieszkanko {
 
-    @SerializedName("apartments")
-    @Expose
+
     private List<Apartment> apartments = null;
-    @SerializedName("schedule")
-    @Expose
     private List<Schedule> schedule = null;
-    @SerializedName("shopping list")
-    @Expose
     private List<ShoppingList> shoppingList = null;
-    @SerializedName("users")
-    @Expose
     private List<User> users = null;
 
     public List<Apartment> getApartments() {
