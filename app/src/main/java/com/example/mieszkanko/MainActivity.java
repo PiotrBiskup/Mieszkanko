@@ -1,5 +1,7 @@
 package com.example.mieszkanko;
 
+import com.example.mieszkanko.Models.ShoppingList;
+import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
 import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import com.example.mieszkanko.BottomNavigationBarFragments.ScheduleFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.ShoppingListFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.StatisticsFragment;
 import com.example.mieszkanko.Models.Product;
+import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -127,6 +131,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 Collections.reverse(toBuyList);
                 AccountSettings.getShoppingList().setToBuy(toBuyList);
+
+                try {
+                    FragmentManager fm = getSupportFragmentManager();
+                    ShoppingListFragment fragment = (ShoppingListFragment) fm.findFragmentById(R.id.fragment_container);
+                    fragment.getToBuyFragment().notifyAdapter();
+                }
+                catch (Exception e)
+                { }
+
 
             }
 

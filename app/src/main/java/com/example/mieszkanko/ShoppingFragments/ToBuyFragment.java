@@ -24,10 +24,14 @@ import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.MainActivity;
 import com.example.mieszkanko.Models.Product;
 import com.example.mieszkanko.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ToBuyFragment extends Fragment {
@@ -42,6 +46,9 @@ public class ToBuyFragment extends Fragment {
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
 
+    CustomAdapter customAdapter;
+    ListView toBuyListView;
+
 
     @Nullable
     @Override
@@ -52,14 +59,17 @@ public class ToBuyFragment extends Fragment {
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
 
+
         productNameEdit = view.findViewById(R.id.productNameEditText);
         descriptionEdit = view.findViewById(R.id.descriptionEditText);
         addProductImage = view.findViewById(R.id.addProductImageView);
 
-        ListView toBuyListView = view.findViewById(R.id.toBuyListView);
+        toBuyListView = view.findViewById(R.id.toBuyListView);
 
-        CustomAdapter customAdapter = new CustomAdapter();
+        customAdapter = new CustomAdapter();
         toBuyListView.setAdapter(customAdapter);
+
+
 
         addProductImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -96,6 +106,12 @@ public class ToBuyFragment extends Fragment {
 
         return view;
     }
+
+    public void notifyAdapter()
+    {
+        customAdapter.notifyDataSetChanged();
+    }
+
 
     class CustomAdapter extends BaseAdapter{
 
