@@ -111,25 +111,28 @@ public class LoginActivity extends AppCompatActivity implements
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
 
-        final String currentUserID = currentUser.getUid();
-
-        mUsersRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(currentUserID)) {
-                    Log.d(TAG, "USER ALREADY EXISTS IN DATABASE XD");
-                    // it exists!
-                }else{
-                    // does not exist
-                    mUsersRef.child(currentUserID).setValue("Czarek");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        final String currentUserID = currentUser.getUid();
+//        if(currentUser != null) {
+//            throw new Exception("dassaadasasddas");
+//        }
+//
+//        mUsersRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                if (snapshot.hasChild(currentUserID)) {
+//                    Log.d(TAG, "USER ALREADY EXISTS IN DATABASE XD");
+//                    // it exists!
+//                }else{
+//                    // does not exist
+//                    mUsersRef.child(currentUserID).setValue("Czarek");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
     }
 

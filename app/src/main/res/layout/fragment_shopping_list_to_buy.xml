@@ -58,14 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/productNameEditText"
             android:layout_alignBottom="@+id/productNameEditText"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="0dp"
-            app:srcCompat="@android:drawable/ic_input_add"
-            android:foreground="?attr/selectableItemBackground"/>
+            android:foreground="?attr/selectableItemBackground"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
 
     </RelativeLayout>

@@ -10,6 +10,9 @@ public class Roomsschedule {
     private Boolean status;
     private String user;
 
+    public Roomsschedule(String room, boolean b, String whoWasLast, int i) {
+    }
+
     public String getRoom() {
         return room;
     }

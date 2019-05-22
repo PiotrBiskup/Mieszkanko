@@ -22,7 +22,12 @@ import android.widget.Toast;
 
 import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.MainActivity;
+import com.example.mieszkanko.Models.Apartment;
 import com.example.mieszkanko.Models.Product;
+import com.example.mieszkanko.Models.Room;
+import com.example.mieszkanko.Models.Roomsschedule;
+import com.example.mieszkanko.Models.Schedule;
+import com.example.mieszkanko.Models.User;
 import com.example.mieszkanko.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,7 +50,7 @@ public class ToBuyFragment extends Fragment {
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
-
+    DatabaseReference mApartmentRef;
     CustomAdapter customAdapter;
     ListView toBuyListView;
 
@@ -58,7 +63,7 @@ public class ToBuyFragment extends Fragment {
 
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
-
+        mApartmentRef=mRootRef.child("apartments");
 
         productNameEdit = view.findViewById(R.id.productNameEditText);
         descriptionEdit = view.findViewById(R.id.descriptionEditText);
@@ -87,8 +92,33 @@ public class ToBuyFragment extends Fragment {
                     Product product = new Product(productName, productDescription);
                     DatabaseReference newRef = mShoppingListRef.child("to_buy").push();
                     newRef.setValue(product);
-
-
+                    List<String>apartmenty = new ArrayList<>();
+                    apartmenty.add("ap1");
+                    User wojtek = new User(apartmenty,"Wojtek123");
+                    User macius = new User(apartmenty,"MaciekXD");
+                    Room r1=new Room("r1","r1","r1");
+                    Room r2 = new Room("r2","r2","r2");
+                    List<List<Roomsschedule>> rs = new ArrayList<>();
+                    List<User> userList= new ArrayList<>();
+                    List<Room> roomList= new ArrayList<>();
+                    roomList.add(r1);
+                    roomList.add(r2);
+                    userList.add(wojtek);
+                    userList.add(macius);
+                    Apartment a1 = new Apartment("ap1",123,"czo",roomList,userList);
+                    Schedule schedule = new Schedule("ap1",rs);
+                    schedule.choosePersonToClean(a1,schedule);
+                    //dodawanie apartamentu przykład
+//                    Room r1 = new Room("r1","kuchnia","kuchnia");
+//                    Room r2 = new Room("r2","łazienka","łazienka");
+//                    Room r3 = new Room("r3","salon","salon");
+//                    List<Room> roomList = new ArrayList<>();
+//                    roomList.add(r1);
+//                    roomList.add(r2);
+//                    roomList.add(r3);
+//                    Apartment apartment = new Apartment("ap2",7,"Mieszkanko na ruchanko",roomList);
+//                    DatabaseReference Ref = mApartmentRef.push();
+//                    Ref.setValue(apartment);
                     descriptionEdit.getText().clear();
                     productNameEdit.getText().clear();
 

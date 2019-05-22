@@ -8,6 +8,12 @@ public class Room {
     private String description;
     private String name;
 
+    public Room(String room, String description, String name) {
+        this.room = room;
+        this.description = description;
+        this.name = name;
+    }
+
     public String getRoom() {
         return room;
     }
