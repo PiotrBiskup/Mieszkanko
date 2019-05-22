@@ -143,7 +143,7 @@
                 android:layout_below="@+id/listViewRooms"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/textViewIntervalTitle"
                 android:layout_toRightOf="@+id/textViewIntervalTitle"
                 android:inputType="number"
