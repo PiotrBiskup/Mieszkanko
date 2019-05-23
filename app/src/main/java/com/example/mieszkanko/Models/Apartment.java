@@ -1,6 +1,7 @@
 
 package com.example.mieszkanko.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -12,6 +13,15 @@ public class Apartment {
     private Integer interval;
     private String name;
     private List<Room> rooms = null;
+    private ArrayList<String> flatmates = null;
+
+    public ArrayList<String> getFlatmates() {
+        return flatmates;
+    }
+
+    public void setFlatmates(ArrayList<String> flatmates) {
+        this.flatmates = flatmates;
+    }
 
     public String getApart() {
         return apart;

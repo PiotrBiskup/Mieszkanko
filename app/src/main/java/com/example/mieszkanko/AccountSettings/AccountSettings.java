@@ -12,6 +12,8 @@ import java.util.List;
 public class AccountSettings {
 
     private static ShoppingList shoppingList = new ShoppingList();
+    private static Apartment apartment = new Apartment();
+    private static User user = new User();
 
     public static ShoppingList getShoppingList() {
         return shoppingList;
@@ -19,5 +21,21 @@ public class AccountSettings {
 
     public static void setShoppingList(ShoppingList shoppingList) {
         AccountSettings.shoppingList = shoppingList;
+    }
+
+    public static Apartment getApartment() {
+        return apartment;
+    }
+
+    public static void setApartment(Apartment apartment) {
+        AccountSettings.apartment = apartment;
+    }
+
+    public static User getUser() {
+        return user;
+    }
+
+    public static void setUser(User user) {
+        AccountSettings.user = user;
     }
 }

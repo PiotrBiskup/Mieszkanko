@@ -15,6 +15,8 @@ public class User {
         this.nick = nick;
     }
 
+    public User(){}
+
     public List<String> getApartments() {
         return apartments;
     }
