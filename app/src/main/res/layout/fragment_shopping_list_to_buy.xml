@@ -12,7 +12,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp" />
+        android:layout_marginRight="0dp"
+        android:scrollbars="vertical" />
 
     <RelativeLayout
         android:id="@+id/addLayout"

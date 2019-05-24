@@ -7,8 +7,10 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/scrollViewProfile"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -144,11 +146,13 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="20dp"
                 android:layout_toEndOf="@+id/textViewIntervalTitle"
                 android:layout_toRightOf="@+id/textViewIntervalTitle"
                 android:inputType="number"
                 android:textSize="20sp"
                 android:gravity="center_horizontal"
+
                 />
 
         </RelativeLayout>
