@@ -86,15 +86,15 @@ public class ToBuyFragment extends Fragment {
                 if(position == selectedItemIndex) {
                     selectedItemIndex = -1;
                     view.setBackgroundColor(Color.TRANSPARENT);
-                    ((TextView)view.findViewById(R.id.productDescriptionTextView)).setTextColor(getResources().getColor(R.color.browser_actions_title_color));
-                    ((TextView)view.findViewById(R.id.productNameTextView)).setTextColor(getResources().getColor(R.color.browser_actions_title_color));
+                    ((TextView)view.findViewById(R.id.productDescriptionTextView)).setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
+                    ((TextView)view.findViewById(R.id.productNameTextView)).setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
 
                 } else {
                     selectedItemIndex = position;
                     for (int j = 0; j < parent.getChildCount(); j++){
                         parent.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
-                        ((TextView)parent.getChildAt(j).findViewById(R.id.productNameTextView)).setTextColor(getResources().getColor(R.color.browser_actions_title_color));
-                        ((TextView)parent.getChildAt(j).findViewById(R.id.productDescriptionTextView)).setTextColor(getResources().getColor(R.color.browser_actions_title_color));
+                        ((TextView)parent.getChildAt(j).findViewById(R.id.productNameTextView)).setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
+                        ((TextView)parent.getChildAt(j).findViewById(R.id.productDescriptionTextView)).setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
                     }
 
                     ((TextView)view.findViewById(R.id.productDescriptionTextView)).setTextColor(Color.WHITE);

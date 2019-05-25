@@ -23,7 +23,7 @@
         android:layout_marginBottom="10dp"
         android:text="Nazwa produktu"
         android:textSize="20sp"
-        android:textColor="@color/browser_actions_title_color"/>
+        android:textColor="@android:color/tab_indicator_text"/>
 
     <TextView
         android:id="@+id/productDescriptionTextView"
@@ -42,7 +42,7 @@
         android:layout_marginBottom="10dp"
         android:text="Opis produktu"
         android:textSize="15sp"
-        android:textColor="@color/browser_actions_title_color"
+        android:textColor="@android:color/tab_indicator_text"
         />
 
 </RelativeLayout>
