@@ -86,11 +86,19 @@ public class ToBuyFragment extends Fragment {
                 if(position == selectedItemIndex) {
                     selectedItemIndex = -1;
                     view.setBackgroundColor(Color.TRANSPARENT);
+                    ((TextView)view.findViewById(R.id.productDescriptionTextView)).setTextColor(getResources().getColor(R.color.browser_actions_title_color));
+                    ((TextView)view.findViewById(R.id.productNameTextView)).setTextColor(getResources().getColor(R.color.browser_actions_title_color));
+
                 } else {
                     selectedItemIndex = position;
-                    for (int j = 0; j < parent.getChildCount(); j++)
+                    for (int j = 0; j < parent.getChildCount(); j++){
                         parent.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
+                        ((TextView)parent.getChildAt(j).findViewById(R.id.productNameTextView)).setTextColor(getResources().getColor(R.color.browser_actions_title_color));
+                        ((TextView)parent.getChildAt(j).findViewById(R.id.productDescriptionTextView)).setTextColor(getResources().getColor(R.color.browser_actions_title_color));
+                    }
 
+                    ((TextView)view.findViewById(R.id.productDescriptionTextView)).setTextColor(Color.WHITE);
+                    ((TextView)view.findViewById(R.id.productNameTextView)).setTextColor(Color.WHITE);
                     view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 }
             }
@@ -99,7 +107,7 @@ public class ToBuyFragment extends Fragment {
         buyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "buy: " + selectedItemIndex, Toast.LENGTH_SHORT).show();
-
+                //tutaj dodawanie do listy kupionych history
             }
         });
 
@@ -107,6 +115,7 @@ public class ToBuyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "delete: " + selectedItemIndex, Toast.LENGTH_SHORT).show();
+                //tutaj tylko usuwanie
             }
         });
 
