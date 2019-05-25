@@ -1,7 +1,9 @@
 package com.example.mieszkanko.ShoppingFragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -114,8 +116,24 @@ public class ToBuyFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "delete: " + selectedItemIndex, Toast.LENGTH_SHORT).show();
-                //tutaj tylko usuwanie
+                if(selectedItemIndex == -1)
+                {
+                    Toast.makeText(getContext(), "Select product you want to delete", Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Delete product")
+                            .setMessage("Are you sure you want to delete " +AccountSettings.getShoppingList().getToBuy().get(selectedItemIndex).getName() + "?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //tutaj tylko usuwanie z bazy danych, index prduktu to lista.size - selectedItemIndex poniewaz robie na liscie reverse wczesniej
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(R.drawable.ic_delete_dialog_24dp)
+                            .show();
+                }
             }
         });
 
