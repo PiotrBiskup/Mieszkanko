@@ -13,4 +13,5 @@
     <string name="flat_mates">Flat mates:</string>
     <string name="rooms">Rooms:</string>
     <string name="interval">Interval (amount of days):</string>
+    <string name="buy">Buy</string>
 </resources>

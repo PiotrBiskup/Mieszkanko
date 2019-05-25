@@ -2,9 +2,12 @@ package com.example.mieszkanko.ShoppingFragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,6 +46,8 @@ public class ToBuyFragment extends Fragment {
     EditText productNameEdit;
     EditText descriptionEdit;
     ImageView addProductImage;
+    FloatingActionButton buyButton;
+    FloatingActionButton deleteButton;
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
@@ -49,17 +55,21 @@ public class ToBuyFragment extends Fragment {
     CustomAdapter customAdapter;
     ListView toBuyListView;
 
+    int selectedItemIndex;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        selectedItemIndex = -1;
 
         View view = inflater.inflate(R.layout.fragment_shopping_list_to_buy, null);
 
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
 
-
+        buyButton = view.findViewById(R.id.floatingButtonBuy);
+        deleteButton = view.findViewById(R.id.floatingButtonDelete);
         productNameEdit = view.findViewById(R.id.productNameEditText);
         descriptionEdit = view.findViewById(R.id.descriptionEditText);
         addProductImage = view.findViewById(R.id.addProductImageView);
@@ -68,6 +78,37 @@ public class ToBuyFragment extends Fragment {
 
         customAdapter = new CustomAdapter();
         toBuyListView.setAdapter(customAdapter);
+
+        toBuyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == selectedItemIndex) {
+                    selectedItemIndex = -1;
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    selectedItemIndex = position;
+                    for (int j = 0; j < parent.getChildCount(); j++)
+                        parent.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
+
+                    view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+        });
+
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "buy: " + selectedItemIndex, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "delete: " + selectedItemIndex, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 

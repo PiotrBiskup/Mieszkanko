@@ -3,6 +3,7 @@ package com.example.mieszkanko.ShoppingFragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ public class ShoppingListHistoryFragment extends Fragment {
             TextView productPrice = convertView.findViewById(R.id.textViewPurchasedProductPrice);
             TextView purchaseDate = convertView.findViewById(R.id.textViewPurchaseDate);
             TextView buyer = convertView.findViewById(R.id.textViewBuyer);
+
 
             boughtProductName.setText(AccountSettings.getShoppingList().getPurchased().get(position).getName());
             productPrice.setText(String.format ("%.2f", AccountSettings.getShoppingList().getPurchased().get(position).getPrice()) + " PLN");
