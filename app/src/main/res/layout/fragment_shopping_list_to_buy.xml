@@ -71,7 +71,7 @@
         android:scrollbars="vertical" />
 
     <RelativeLayout
-        android:id="@+id/floatingButtonBuyFrameLayout"
+        android:id="@+id/floatingButtonDeleteFrameLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -85,26 +85,28 @@
             android:id="@+id/floatingButtonDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_delete_black_24dp" />
+            app:srcCompat="@drawable/ic_delete_black_24dp"
+            android:elevation="0dp"
+            app:elevation="0dp"/>
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/floatingButtonDeleteFrameLayout"
+        android:id="@+id/floatingButtonBuyFrameLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/floatingButtonBuyFrameLayout"
+        android:layout_above="@+id/floatingButtonDeleteFrameLayout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        >
+        android:layout_marginBottom="20dp">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingButtonBuy"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:elevation="0dp"/>
 
         <TextView
             android:layout_width="wrap_content"
