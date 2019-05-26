@@ -2,6 +2,7 @@ package com.example.mieszkanko.ShoppingFragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -40,9 +42,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ToBuyFragment extends Fragment {
 
@@ -125,18 +131,43 @@ public class ToBuyFragment extends Fragment {
                     final View dialogView = inflater.inflate(R.layout.
                             buying_product_dialog_custom_layout, null);
 
-
                     final EditText productNameDialog = dialogView.findViewById(R.id.productNameDialogEditText);
                     final EditText priceDialog = dialogView.findViewById(R.id.priceDialogEditText);
                     final TextView datePicker = dialogView.findViewById(R.id.datePickerDialogTextView);
 
+
+
+
                     productNameDialog.setText(AccountSettings.getShoppingList().getToBuy().
                             get(selectedItemIndex).getName());
+
+                    final Calendar myCalendar = Calendar.getInstance();
+                    final String myFormat = "dd-MM-YYYY";
+                    final DateFormat sdf = new SimpleDateFormat(myFormat, Locale.GERMAN);
+                    datePicker.setText(sdf.format(myCalendar.getTime()));
+
+                    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                              int dayOfMonth) {
+                            // TODO Auto-generated method stub
+                            myCalendar.set(Calendar.YEAR, year);
+                            myCalendar.set(Calendar.MONTH, monthOfYear);
+                            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                             //In which you need put here
+                            datePicker.setText(sdf.format(myCalendar.getTime()));
+                        }
+
+                    };
 
                     datePicker.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // date picker
+                            // TODO Auto-generated method stub
+                            new DatePickerDialog(getContext(), date, myCalendar
+                                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                         }
                     });
 
@@ -149,9 +180,14 @@ public class ToBuyFragment extends Fragment {
                         .setPositiveButton("Buy", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), "kupionenenen!",
+                                Toast.makeText(getContext(), "You bought the product",
                                         Toast.LENGTH_SHORT).show();
+                                //String productName = productNameDialog.getText().toString();
+                                //String productPrice = priceDialog.getText().toString();
+                                //String purchaseDate = datePicker.getText().toString();
 
+                                //dodaj do listy zakupionych i usun z listy tobuy (index to selectedItemIndex)
+                                //na koniec ustaw selectedItemIndex = -1
                             }
                         });
 
@@ -217,11 +253,6 @@ public class ToBuyFragment extends Fragment {
                     dialog.show();
 
                     ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-
-
-
-
-
                 }
             }
         });

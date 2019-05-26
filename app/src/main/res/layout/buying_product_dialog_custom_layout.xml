@@ -91,7 +91,6 @@
         android:layout_toEndOf="@+id/dateTitleDialogTextView"
         android:layout_toRightOf="@+id/dateTitleDialogTextView"
         android:gravity="center"
-        android:text="26-05-2019"
         android:textSize="15sp"
         android:textColor="?attr/editTextColor"/>
 
