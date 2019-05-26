@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +22,11 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +66,7 @@ public class ToBuyFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         selectedItemIndex = -1;
 
         View view = inflater.inflate(R.layout.fragment_shopping_list_to_buy, null);
@@ -88,15 +92,19 @@ public class ToBuyFragment extends Fragment {
                 if(position == selectedItemIndex) {
                     selectedItemIndex = -1;
                     view.setBackgroundColor(Color.TRANSPARENT);
-                    ((TextView)view.findViewById(R.id.productDescriptionTextView)).setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
-                    ((TextView)view.findViewById(R.id.productNameTextView)).setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
+                    ((TextView)view.findViewById(R.id.productDescriptionTextView))
+                            .setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
+                    ((TextView)view.findViewById(R.id.productNameTextView))
+                            .setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
 
                 } else {
                     selectedItemIndex = position;
                     for (int j = 0; j < parent.getChildCount(); j++){
                         parent.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
-                        ((TextView)parent.getChildAt(j).findViewById(R.id.productNameTextView)).setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
-                        ((TextView)parent.getChildAt(j).findViewById(R.id.productDescriptionTextView)).setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
+                        ((TextView)parent.getChildAt(j).findViewById(R.id.productNameTextView))
+                                .setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
+                        ((TextView)parent.getChildAt(j).findViewById(R.id.productDescriptionTextView))
+                                .setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
                     }
 
                     ((TextView)view.findViewById(R.id.productDescriptionTextView)).setTextColor(Color.WHITE);
@@ -108,8 +116,113 @@ public class ToBuyFragment extends Fragment {
 
         buyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getContext(), "buy: " + selectedItemIndex, Toast.LENGTH_SHORT).show();
-                //tutaj dodawanie do listy kupionych history
+                if(selectedItemIndex == -1) {
+                    Toast.makeText(getContext(), "Select product you want to buy",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+
+
+                    final View dialogView = inflater.inflate(R.layout.
+                            buying_product_dialog_custom_layout, null);
+
+
+                    final EditText productNameDialog = dialogView.findViewById(R.id.productNameDialogEditText);
+                    final EditText priceDialog = dialogView.findViewById(R.id.priceDialogEditText);
+                    final TextView datePicker = dialogView.findViewById(R.id.datePickerDialogTextView);
+
+                    productNameDialog.setText(AccountSettings.getShoppingList().getToBuy().
+                            get(selectedItemIndex).getName());
+
+                    datePicker.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // date picker
+                        }
+                    });
+
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Buy product")
+                        .setIcon(R.drawable.ic_shopping_basket_black_24dp)
+                        .setView(dialogView)
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton("Buy", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getContext(), "kupionenenen!",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+                    final AlertDialog dialog = builder.create();
+
+                    priceDialog.addTextChangedListener(new TextWatcher() {
+
+                        private void handleText() {
+                            // Grab the button
+                            final Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                            if(priceDialog.getText().length() == 0 || productNameDialog.getText().length() == 0) {
+                                okButton.setEnabled(false);
+                            } else {
+                                okButton.setEnabled(true);
+                            }
+                        }
+
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            handleText();
+
+                        }
+                    });
+                    productNameDialog.addTextChangedListener(new TextWatcher() {
+
+                        private void handleText() {
+                            // Grab the button
+                            final Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                            if(productNameDialog.getText().length() == 0 || priceDialog.getText().length() == 0) {
+                                okButton.setEnabled(false);
+                            } else {
+                                okButton.setEnabled(true);
+                            }
+                        }
+
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            handleText();
+
+                        }
+                    });
+
+                    dialog.show();
+
+                    ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+
+
+
+
+
+                }
             }
         });
 
@@ -118,16 +231,21 @@ public class ToBuyFragment extends Fragment {
             public void onClick(View v) {
                 if(selectedItemIndex == -1)
                 {
-                    Toast.makeText(getContext(), "Select product you want to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Select product you want to delete",
+                            Toast.LENGTH_SHORT).show();
                 } else
                 {
                     new AlertDialog.Builder(getContext())
                             .setTitle("Delete product")
-                            .setMessage("Are you sure you want to delete " +AccountSettings.getShoppingList().getToBuy().get(selectedItemIndex).getName() + "?")
+                            .setMessage("Are you sure you want to delete " + AccountSettings
+                                    .getShoppingList().getToBuy()
+                                    .get(selectedItemIndex).getName() + "?")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //tutaj tylko usuwanie z bazy danych, index prduktu to lista.size - selectedItemIndex poniewaz robie na liscie reverse wczesniej
+                                    //tutaj tylko usuwanie z bazy danych, index prduktu to
+                                    // lista.size - selectedItemIndex poniewaz robie na liscie reverse wczesniej
+                                    //po ustawieniu ustawić selectedItemIndex = -1
                                 }
                             })
                             .setNegativeButton(android.R.string.no, null)
@@ -136,7 +254,6 @@ public class ToBuyFragment extends Fragment {
                 }
             }
         });
-
 
 
         addProductImage.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +279,7 @@ public class ToBuyFragment extends Fragment {
 
                 } else {
                     Toast.makeText(getActivity(), "Enter product name",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                 }
 
 
