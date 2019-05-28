@@ -18,7 +18,12 @@ import com.example.mieszkanko.R;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ShoppingListHistoryFragment extends Fragment {
+
+    private CustomAdapterPurchasedProductsList customAdapterPurchasedProductsList;
 
     @Nullable
     @Override
@@ -26,11 +31,16 @@ public class ShoppingListHistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shopping_list_history, null);
 
         ListView purchasedProductsList = view.findViewById(R.id.purchasedProductsListView);
-        CustomAdapterPurchasedProductsList customAdapterPurchasedProductsList = new CustomAdapterPurchasedProductsList();
+        customAdapterPurchasedProductsList = new CustomAdapterPurchasedProductsList();
 
         purchasedProductsList.setAdapter(customAdapterPurchasedProductsList);
 
         return view;
+    }
+
+    public void notifyAdapter()
+    {
+        customAdapterPurchasedProductsList.notifyDataSetChanged();
     }
 
     class CustomAdapterPurchasedProductsList extends BaseAdapter {
@@ -62,7 +72,9 @@ public class ShoppingListHistoryFragment extends Fragment {
 
             boughtProductName.setText(AccountSettings.getShoppingList().getPurchased().get(position).getName());
             productPrice.setText(String.format ("%.2f", AccountSettings.getShoppingList().getPurchased().get(position).getPrice()) + " PLN");
-            purchaseDate.setText(AccountSettings.getShoppingList().getPurchased().get(position).getPurchaseDate());
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date(Long.parseLong(AccountSettings.getShoppingList().getPurchased().get(position).getPurchaseDate()));
+            purchaseDate.setText(sf.format(date));
             buyer.setText(AccountSettings.getShoppingList().getPurchased().get(position).getBuyer());
 
             return convertView;

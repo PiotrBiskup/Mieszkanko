@@ -3,6 +3,7 @@ package com.example.mieszkanko.Models;
 public class Product {
     private String name;
     private String description;
+    private String keyId;
 
     public Product() {
     }
@@ -26,5 +27,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(String keyId) {
+        this.keyId = keyId;
     }
 }

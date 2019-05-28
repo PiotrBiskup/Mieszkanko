@@ -1,5 +1,8 @@
 package com.example.mieszkanko;
 
+import com.example.mieszkanko.Models.Apartment;
+import com.example.mieszkanko.Models.Purchased;
+import com.example.mieszkanko.Models.User;
 import com.example.mieszkanko.Models.ShoppingList;
 import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
 import android.accounts.Account;
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
 
+    String userIdOfThisUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +57,30 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
 
-//        Bundle bundle = getIntent().getExtras();
-//        userIdOfThisUser = bundle.getString("messageUserId");
+        Bundle bundle = getIntent().getExtras();
+        userIdOfThisUser = bundle.getString("messageUserId");
+        Log.w(TAG, "UUUUUUUUUUUUUUSER IIIIIIID  ++++++++ " +  userIdOfThisUser);
+
+        mRootRef.child("users").child(userIdOfThisUser).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+                AccountSettings.setUser(currentUser);
+                Log.w(TAG, "++++++++++++ NNNNNNIIIIIIIICCCCCCCCKKKKKKK  ++++++++ " +  AccountSettings.getUser().getNick());
+                Log.w(TAG, "++++++++++++ AAAAAAAAAPPPPARTMENT FROM UUUUUSER  ++++++++ " +  AccountSettings.getUser().getApartment());
+                getApartmentFromDB();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
 
         //get settings from database
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-
-
 
         loadFragment(new ScheduleFragment());
     }
@@ -112,6 +132,42 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    private void getUserFromDB(String userId) {
+
+        mRootRef.child("users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User userek = dataSnapshot.getValue(User.class);
+                AccountSettings.getApartment().addRoomatesUser(userek);
+                Log.w(TAG, "++++++++++++ add new user  ++++++++ " +  userek.getNick());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    private void getApartmentFromDB() {
+        String apartmentId = AccountSettings.getUser().getApartment();
+        Log.w(TAG, "---------------------- AAAAAAAAAPPPPARTMENTTTTTTTTT  ------------- " +  apartmentId);
+
+        mRootRef.child("apartments").child(apartmentId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Apartment currentApartment = dataSnapshot.getValue(Apartment.class);
+                AccountSettings.setApartment(currentApartment);
+                Log.w(TAG, "++++++++++++ apartment  ++++++++ " +  AccountSettings.getApartment().getName());
+                for(String idik : AccountSettings.getApartment().getRoommates()) {
+                    Log.w(TAG, "++++++++++++ roommie  ++++++++ " +  idik);
+                    getUserFromDB(idik);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -124,6 +180,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Product prod = ds.getValue(Product.class);
+                    prod.setKeyId(ds.getKey());
+//                    Log.w(TAG, "KEY IDDDDDDDDDDDD ++++++++ " +  prod.getKeyId());
                     toBuyList.add(prod);
                 }
 
@@ -134,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     FragmentManager fm = getSupportFragmentManager();
                     ShoppingListFragment fragment = (ShoppingListFragment) fm.findFragmentById(R.id.fragment_container);
                     fragment.getToBuyFragment().notifyAdapter();
+//                    fragment.getShoppingListHistoryFragment().notifyAdapter();
                 }
                 catch (Exception e)
                 { }
@@ -141,6 +200,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        mShoppingListRef.child("purchased").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<Purchased> purchasedList = new ArrayList<>();
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Purchased purch = ds.getValue(Purchased.class);
+//                    purch.setKeyId(ds.getKey());
+//                    Log.w(TAG, "KEY IDDDDDDDDDDDD ++++++++ " +  prod.getKeyId());
+                    purchasedList.add(purch);
+                }
+
+                Collections.reverse(purchasedList);
+                AccountSettings.getShoppingList().setPurchased(purchasedList);
+
+                try {
+                    FragmentManager fm = getSupportFragmentManager();
+                    ShoppingListFragment fragment = (ShoppingListFragment) fm.findFragmentById(R.id.fragment_container);
+                    fragment.getShoppingListHistoryFragment().notifyAdapter();
+                }
+                catch (Exception e)
+                { }
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });

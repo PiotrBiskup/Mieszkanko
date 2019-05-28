@@ -61,6 +61,12 @@ public class ShoppingListFragment extends Fragment {
         return (ToBuyFragment) fragments.get(0);
     }
 
+    public ShoppingListHistoryFragment getShoppingListHistoryFragment(){
+        FragmentManager fm = getChildFragmentManager();
+        List<Fragment> fragments = fm.getFragments();
+        return (ShoppingListHistoryFragment) fragments.get(1);
+    }
+
 
 }
 

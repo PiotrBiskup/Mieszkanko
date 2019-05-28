@@ -9,34 +9,39 @@ import com.google.gson.annotations.SerializedName;
 
 public class Apartment {
 
-    private String apart;
-    private Integer interval;
+//    private String apart;
+//    private Integer interval;
     private String name;
     private List<Room> rooms = null;
-    private ArrayList<String> flatmates = null;
+    private ArrayList<String> roommates = null;
+    private ArrayList<User> roommatesUser = new ArrayList<User>();
 
-    public ArrayList<String> getFlatmates() {
-        return flatmates;
+    public ArrayList<User> getRoommatesUser() {
+        return roommatesUser;
     }
 
-    public void setFlatmates(ArrayList<String> flatmates) {
-        this.flatmates = flatmates;
+    public void setRoomatesUser(ArrayList<User> roommatesUser) {
+        this.roommatesUser = roommatesUser;
     }
 
-    public String getApart() {
-        return apart;
+    public void addRoomatesUser(User roommateUser) {
+        this.roommatesUser.add(roommateUser);
     }
 
-    public void setApart(String apart) {
-        this.apart = apart;
+    public Apartment(String name, List<Room> rooms, ArrayList<String> roommates) {
+        this.name = name;
+        this.rooms = rooms;
+        this.roommates = roommates;
     }
 
-    public Integer getInterval() {
-        return interval;
+    public Apartment() {}
+
+    public ArrayList<String> getRoommates() {
+        return roommates;
     }
 
-    public void setInterval(Integer interval) {
-        this.interval = interval;
+    public void setRoommates(ArrayList<String> roommates) {
+        this.roommates = roommates;
     }
 
     public String getName() {

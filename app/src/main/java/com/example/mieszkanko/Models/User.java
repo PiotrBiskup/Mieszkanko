@@ -7,22 +7,22 @@ import java.util.List;
 
 public class User {
 
-    private List<String> apartments = null;
+    private String apartment = null;
     private String nick;
 
-    public User(List<String> apartments, String nick) {
-        this.apartments = apartments;
+    public User(String apartment, String nick) {
+        this.apartment = apartment;
         this.nick = nick;
     }
 
-    public User(){}
+    public User() {}
 
-    public List<String> getApartments() {
-        return apartments;
+    public String getApartment() {
+        return apartment;
     }
 
-    public void setApartments(List<String> apartments) {
-        this.apartments = apartments;
+    public void setApartments(String apartment) {
+        this.apartment = apartment;
     }
 
     public String getNick() {
