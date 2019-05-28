@@ -20,17 +20,24 @@ import org.w3c.dom.Text;
 
 public class ShoppingListHistoryFragment extends Fragment {
 
+    private CustomAdapterPurchasedProductsList customAdapterPurchasedProductsList;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shopping_list_history, null);
 
         ListView purchasedProductsList = view.findViewById(R.id.purchasedProductsListView);
-        CustomAdapterPurchasedProductsList customAdapterPurchasedProductsList = new CustomAdapterPurchasedProductsList();
+        customAdapterPurchasedProductsList = new CustomAdapterPurchasedProductsList();
 
         purchasedProductsList.setAdapter(customAdapterPurchasedProductsList);
 
         return view;
+    }
+
+    public void notifyAdapter()
+    {
+        customAdapterPurchasedProductsList.notifyDataSetChanged();
     }
 
     class CustomAdapterPurchasedProductsList extends BaseAdapter {

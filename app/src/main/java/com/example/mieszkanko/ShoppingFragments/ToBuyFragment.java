@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.MainActivity;
 import com.example.mieszkanko.Models.Product;
+import com.example.mieszkanko.Models.Purchased;
 import com.example.mieszkanko.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -142,7 +143,7 @@ public class ToBuyFragment extends Fragment {
                             get(selectedItemIndex).getName());
 
                     final Calendar myCalendar = Calendar.getInstance();
-                    final String myFormat = "dd-MM-YYYY";
+                    final String myFormat = "dd-MM-yyyy";
                     final DateFormat sdf = new SimpleDateFormat(myFormat, Locale.GERMAN);
                     datePicker.setText(sdf.format(myCalendar.getTime()));
 
@@ -182,11 +183,16 @@ public class ToBuyFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getContext(), "You bought the product",
                                         Toast.LENGTH_SHORT).show();
-                                //String productName = productNameDialog.getText().toString();
-                                //String productPrice = priceDialog.getText().toString();
-                                //String purchaseDate = datePicker.getText().toString();
-
+                                String productName = productNameDialog.getText().toString();
+                                Double productPrice = Double.parseDouble(priceDialog.getText().toString());
+                                String purchaseDate = datePicker.getText().toString();
+                                Purchased purch = new Purchased("userek", productName, productPrice, purchaseDate);
+                                DatabaseReference newRef = mShoppingListRef.child("purchased").push();
+                                newRef.setValue(purch);
                                 //dodaj do listy zakupionych i usun z listy tobuy (index to selectedItemIndex)
+                                String key_to_delete = AccountSettings.getShoppingList().getToBuy().get(selectedItemIndex).getKeyId();
+                                mShoppingListRef.child("to_buy").child(key_to_delete).removeValue();
+                                selectedItemIndex = -1;
                                 //na koniec ustaw selectedItemIndex = -1
                             }
                         });
@@ -274,9 +280,10 @@ public class ToBuyFragment extends Fragment {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //tutaj tylko usuwanie z bazy danych, index prduktu to
-                                    // lista.size - selectedItemIndex poniewaz robie na liscie reverse wczesniej
-                                    //po ustawieniu ustawić selectedItemIndex = -1
+
+                                    String key_to_delete = AccountSettings.getShoppingList().getToBuy().get(selectedItemIndex).getKeyId();
+                                    mShoppingListRef.child("to_buy").child(key_to_delete).removeValue();
+                                    selectedItemIndex = -1;
                                 }
                             })
                             .setNegativeButton(android.R.string.no, null)

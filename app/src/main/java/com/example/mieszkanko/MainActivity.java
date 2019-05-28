@@ -1,5 +1,6 @@
 package com.example.mieszkanko;
 
+import com.example.mieszkanko.Models.Purchased;
 import com.example.mieszkanko.Models.ShoppingList;
 import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
 import android.accounts.Account;
@@ -124,6 +125,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Product prod = ds.getValue(Product.class);
+                    prod.setKeyId(ds.getKey());
+//                    Log.w(TAG, "KEY IDDDDDDDDDDDD ++++++++ " +  prod.getKeyId());
                     toBuyList.add(prod);
                 }
 
@@ -134,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     FragmentManager fm = getSupportFragmentManager();
                     ShoppingListFragment fragment = (ShoppingListFragment) fm.findFragmentById(R.id.fragment_container);
                     fragment.getToBuyFragment().notifyAdapter();
+//                    fragment.getShoppingListHistoryFragment().notifyAdapter();
                 }
                 catch (Exception e)
                 { }
@@ -141,6 +145,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        mShoppingListRef.child("purchased").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<Purchased> purchasedList = new ArrayList<>();
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Purchased purch = ds.getValue(Purchased.class);
+//                    purch.setKeyId(ds.getKey());
+//                    Log.w(TAG, "KEY IDDDDDDDDDDDD ++++++++ " +  prod.getKeyId());
+                    purchasedList.add(purch);
+                }
+
+                Collections.reverse(purchasedList);
+                AccountSettings.getShoppingList().setPurchased(purchasedList);
+
+                try {
+                    FragmentManager fm = getSupportFragmentManager();
+                    ShoppingListFragment fragment = (ShoppingListFragment) fm.findFragmentById(R.id.fragment_container);
+                    fragment.getShoppingListHistoryFragment().notifyAdapter();
+                }
+                catch (Exception e)
+                { }
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
