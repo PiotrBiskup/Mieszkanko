@@ -185,7 +185,7 @@ public class ToBuyFragment extends Fragment {
                                         Toast.LENGTH_SHORT).show();
                                 String productName = productNameDialog.getText().toString();
                                 Double productPrice = Double.parseDouble(priceDialog.getText().toString());
-                                String purchaseDate = datePicker.getText().toString();
+                                String purchaseDate = String.valueOf(myCalendar.getTimeInMillis());
                                 Purchased purch = new Purchased("userek", productName, productPrice, purchaseDate);
                                 DatabaseReference newRef = mShoppingListRef.child("purchased").push();
                                 newRef.setValue(purch);

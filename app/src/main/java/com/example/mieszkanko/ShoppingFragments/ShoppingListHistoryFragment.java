@@ -18,6 +18,9 @@ import com.example.mieszkanko.R;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ShoppingListHistoryFragment extends Fragment {
 
     private CustomAdapterPurchasedProductsList customAdapterPurchasedProductsList;
@@ -69,7 +72,9 @@ public class ShoppingListHistoryFragment extends Fragment {
 
             boughtProductName.setText(AccountSettings.getShoppingList().getPurchased().get(position).getName());
             productPrice.setText(String.format ("%.2f", AccountSettings.getShoppingList().getPurchased().get(position).getPrice()) + " PLN");
-            purchaseDate.setText(AccountSettings.getShoppingList().getPurchased().get(position).getPurchaseDate());
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date(Long.parseLong(AccountSettings.getShoppingList().getPurchased().get(position).getPurchaseDate()));
+            purchaseDate.setText(sf.format(date));
             buyer.setText(AccountSettings.getShoppingList().getPurchased().get(position).getBuyer());
 
             return convertView;
