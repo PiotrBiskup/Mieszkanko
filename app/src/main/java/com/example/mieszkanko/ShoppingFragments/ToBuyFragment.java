@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.MainActivity;
 import com.example.mieszkanko.Models.Apartment;
+import com.example.mieszkanko.Models.Period;
 import com.example.mieszkanko.Models.Product;
 import com.example.mieszkanko.Models.Room;
 import com.example.mieszkanko.Models.Roomsschedule;
@@ -51,6 +52,7 @@ public class ToBuyFragment extends Fragment {
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
     DatabaseReference mApartmentRef;
+    DatabaseReference mScheduleRef;
     CustomAdapter customAdapter;
     ListView toBuyListView;
 
@@ -64,6 +66,7 @@ public class ToBuyFragment extends Fragment {
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
         mApartmentRef=mRootRef.child("apartments");
+        mScheduleRef=mRootRef.child("schedule");
 
         productNameEdit = view.findViewById(R.id.productNameEditText);
         descriptionEdit = view.findViewById(R.id.descriptionEditText);
@@ -105,9 +108,11 @@ public class ToBuyFragment extends Fragment {
                     roomList.add(r2);
                     userList.add(wojtek);
                     userList.add(macius);
+                    Period period = new Period();
+                    List<Period> periodList=new ArrayList<>();
                     Apartment a1 = new Apartment("ap1",123,"czo",roomList,userList);
-                    Schedule schedule = new Schedule("ap1",rs);
-                    schedule.choosePersonToClean(a1,schedule);
+                    Schedule schedule = new Schedule(periodList);
+                    Period x = schedule.choosePersonToClean(a1,schedule);
                     //dodawanie apartamentu przykład
 //                    Room r1 = new Room("r1","kuchnia","kuchnia");
 //                    Room r2 = new Room("r2","łazienka","łazienka");
@@ -119,6 +124,8 @@ public class ToBuyFragment extends Fragment {
 //                    Apartment apartment = new Apartment("ap2",7,"Mieszkanko na ruchanko",roomList);
 //                    DatabaseReference Ref = mApartmentRef.push();
 //                    Ref.setValue(apartment);
+                    DatabaseReference Ref = mScheduleRef.push();
+                    Ref.setValue(x);
                     descriptionEdit.getText().clear();
                     productNameEdit.getText().clear();
 

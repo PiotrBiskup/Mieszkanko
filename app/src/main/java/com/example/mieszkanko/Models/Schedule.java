@@ -8,42 +8,31 @@ import java.util.List;
 public class Schedule {
 
 
-    private List<List<Roomsschedule>> roomsschedule = null;
-    private long timestamp;
+    private List<Period> periodList = null;
+
+    public Schedule(List<Period> periodList) {
+        this.periodList = periodList;
+    }
+
     public Schedule() {
     }
 
-    public Schedule(List<List<Roomsschedule>> roomsschedule, Integer timestamp) {
-        this.roomsschedule = roomsschedule;
-        this.timestamp = timestamp;
+    public List<Period> getPeriodList() {
+        return periodList;
     }
 
-
-
-    public List<List<Roomsschedule>> getRoomsschedule() {
-        return roomsschedule;
+    public void setPeriodList(List<Period> periodList) {
+        this.periodList = periodList;
     }
 
-    public void setRoomsschedule(List<List<Roomsschedule>> roomsschedule) {
-        this.roomsschedule = roomsschedule;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-
-    public static void choosePersonToClean(Apartment apartment,Schedule schedule){
+    public static Period choosePersonToClean(Apartment apartment, Schedule schedule){
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 7);
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Period period = new Period();
         int numberOfRooms=apartment.getRooms().size();
         List<Roomsschedule> roomsSchedules = new ArrayList<>();
-        if( schedule.getRoomsschedule().size()<1) {
+        if( schedule.getPeriodList().size()<1) {
             for (int i = 0; i < numberOfRooms; i++) {
                 if(apartment.getUsers().size()<=i){
                     Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(),false,apartment.getUsers().get(i-apartment.getUsers().size()).getNick());
@@ -54,35 +43,39 @@ public class Schedule {
                 }
 
             }
-            schedule.getRoomsschedule().add(roomsSchedules);
-            schedule.setTimestamp(c.getTimeInMillis());
-        }else if(schedule.getRoomsschedule().size()< apartment.getUsers().size()){
+            period.setRoomsschedule(roomsSchedules);
+            period.setTimestamp(c.getTimeInMillis());
+            return period;
+
+        }else if(schedule.getPeriodList().size()< apartment.getUsers().size()){
             for (int i = 0; i < numberOfRooms; i++) {
-                if(i+schedule.getRoomsschedule().size()<apartment.getUsers().size()){
-                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(),false,apartment.getUsers().get(i+schedule.getRoomsschedule().size()).getNick());
+                if(i+schedule.getPeriodList().size()<apartment.getUsers().size()){
+                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(),false,apartment.getUsers().get(i+schedule.getPeriodList().size()).getNick());
                     roomsSchedules.add(roomsSchedule);
                 }else {
-                    System.out.println(i + schedule.getRoomsschedule().size() - apartment.getUsers().size());
-                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(), false, apartment.getUsers().get(i + schedule.getRoomsschedule().size() -apartment.getUsers().size()).getNick());
+                    System.out.println(i + schedule.getPeriodList().size() - apartment.getUsers().size());
+                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(), false, apartment.getUsers().get(i + schedule.getPeriodList().size() -apartment.getUsers().size()).getNick());
                     roomsSchedules.add(roomsSchedule);
                 }
             }
-            schedule.getRoomsschedule().add(roomsSchedules);
-            schedule.setTimestamp(c.getTimeInMillis());
+            period.setRoomsschedule(roomsSchedules);
+            period.setTimestamp(c.getTimeInMillis());
+            return period;
         }else{
             for (Integer i = 0; i < numberOfRooms; i++) {
                 Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(),false,whoWasLast(schedule,apartment.getUsers().size(),i));
                 roomsSchedules.add(roomsSchedule);
             }
-            schedule.getRoomsschedule().add(roomsSchedules);
-            schedule.setTimestamp(c.getTimeInMillis());
+            period.setRoomsschedule(roomsSchedules);
+            period.setTimestamp(c.getTimeInMillis());
+            return period;
         }
 
     }
 
     public static  String whoWasLast(Schedule schedule, Integer numberOfLocators, Integer roomNumber){
-        System.out.println(schedule.getRoomsschedule().size() -numberOfLocators +"    "+ roomNumber);
-        List<Roomsschedule> list= schedule.getRoomsschedule().get(schedule.getRoomsschedule().size() -numberOfLocators );
+        System.out.println(schedule.getPeriodList().size() -numberOfLocators +"    "+ roomNumber);
+        List<Roomsschedule> list= schedule.getPeriodList().get(schedule.getPeriodList().size() -numberOfLocators ).getRoomsschedule();
         String user = list.get(roomNumber).getUser();
         return user;
     }
