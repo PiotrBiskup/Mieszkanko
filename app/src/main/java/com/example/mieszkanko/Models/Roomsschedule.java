@@ -10,7 +10,13 @@ public class Roomsschedule {
     private Boolean status;
     private String user;
 
-    public Roomsschedule(String room, boolean b, String whoWasLast, int i) {
+    public Roomsschedule() {
+    }
+
+    public Roomsschedule(String room, Boolean status, String user) {
+        this.room = room;
+        this.status = status;
+        this.user = user;
     }
 
     public String getRoom() {
