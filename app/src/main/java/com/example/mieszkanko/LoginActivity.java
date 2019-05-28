@@ -155,6 +155,7 @@ public class LoginActivity extends AppCompatActivity implements
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("messageUserId", user.getUid());
                             startActivity(intent);
 
                         } else {

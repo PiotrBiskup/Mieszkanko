@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.MainActivity;
+import com.example.mieszkanko.Models.Room;
+import com.example.mieszkanko.Models.User;
 import com.example.mieszkanko.R;
 
 import java.util.ArrayList;
@@ -41,18 +43,25 @@ public class ProfileFragment extends Fragment {
         ListView rooms = view.findViewById(R.id.listViewRooms);
         EditText interval = view.findViewById(R.id.textViewInterval);
 
-        ArrayList<String> dupa = new ArrayList<>();
-        dupa.add("troll");
-        dupa.add("kon");
-
-        userAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1, dupa );
+        ArrayList<String> userNicknames = new ArrayList<>();
+        for(User userek : AccountSettings.getApartment().getRoommatesUser()) {
+            userNicknames.add(userek.getNick());
+        }
+        userAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1, userNicknames );
         flatmates.setAdapter(userAdapter);
-        rooms.setAdapter(userAdapter);
+
+        ArrayList<String> roomNames = new ArrayList<>();
+        for(Room roomik: AccountSettings.getApartment().getRooms()) {
+            roomNames.add(roomik.getName());
+        }
+        roomsAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_list_item_1, roomNames );
+        rooms.setAdapter(roomsAdapter);
 
         expandListViewHeight(flatmates);
         expandListViewHeight(rooms);
 
-
+        flatname.setText(AccountSettings.getApartment().getName());
+        nickname.setText(AccountSettings.getUser().getNick());
 
         return view;
     }
