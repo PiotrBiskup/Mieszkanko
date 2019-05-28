@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
 
-    String userIdOfThisUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
