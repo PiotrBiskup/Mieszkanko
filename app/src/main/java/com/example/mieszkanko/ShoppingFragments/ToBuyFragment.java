@@ -142,7 +142,7 @@ public class ToBuyFragment extends Fragment {
                             get(selectedItemIndex).getName());
 
                     final Calendar myCalendar = Calendar.getInstance();
-                    final String myFormat = "dd-MM-YYYY";
+                    final String myFormat = "dd-MM-yyyy";
                     final DateFormat sdf = new SimpleDateFormat(myFormat, Locale.GERMAN);
                     datePicker.setText(sdf.format(myCalendar.getTime()));
 
