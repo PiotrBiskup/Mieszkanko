@@ -1,23 +1,25 @@
 
 package com.example.mieszkanko.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 
 public class ShoppingList {
 
-    private String apart;
-    private List<Purchased> purchased = null;
-    private List<Product> toBuy = null;
+    private List<Purchased> purchased;
+    private List<Product> toBuy;
 
-    public String getApart() {
-        return apart;
+    public ShoppingList() {
+        this.purchased = new ArrayList<>();
+        this.toBuy = new ArrayList<>();
     }
 
-    public void setApart(String apart) {
-        this.apart = apart;
-    }
+//    public void addToToBuy(String productName, String description){
+//        Product product = new Product(productName, description);
+//        this.toBuy.add(product);
+//    }
 
     public List<Purchased> getPurchased() {
         return purchased;
@@ -34,6 +36,8 @@ public class ShoppingList {
     public void setToBuy(List<Product> toBuy) {
         this.toBuy = toBuy;
     }
+
+
 
 
 }

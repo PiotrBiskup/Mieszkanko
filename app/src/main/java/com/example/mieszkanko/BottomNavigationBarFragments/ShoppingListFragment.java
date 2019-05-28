@@ -6,7 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,9 @@ import com.example.mieszkanko.R;
 import com.example.mieszkanko.Adapter.SectionsPageAdapter;
 import com.example.mieszkanko.ShoppingFragments.ShoppingListHistoryFragment;
 import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShoppingListFragment extends Fragment {
 
@@ -37,6 +42,8 @@ public class ShoppingListFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+
+
         return view;
     }
 
@@ -46,6 +53,12 @@ public class ShoppingListFragment extends Fragment {
         adapter.addFragment(new ShoppingListHistoryFragment(), "History");
         viewPager.setAdapter(adapter);
 
+    }
+
+    public ToBuyFragment getToBuyFragment(){
+        FragmentManager fm = getChildFragmentManager();
+        List<Fragment> fragments = fm.getFragments();
+        return (ToBuyFragment) fragments.get(0);
     }
 
 

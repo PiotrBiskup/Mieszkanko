@@ -10,4 +10,8 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="flat_name">Flat name:</string>
+    <string name="flat_mates">Flat mates:</string>
+    <string name="rooms">Rooms:</string>
+    <string name="interval">Interval (amount of days):</string>
+    <string name="buy">Buy</string>
 </resources>

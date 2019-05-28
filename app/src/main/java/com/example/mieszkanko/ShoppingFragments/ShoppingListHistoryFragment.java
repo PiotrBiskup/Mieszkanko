@@ -3,6 +3,7 @@ package com.example.mieszkanko.ShoppingFragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ public class ShoppingListHistoryFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return AccountSettings.getHistoryProductsName().size();
+            return AccountSettings.getShoppingList().getPurchased().size();
         }
 
         @Override
@@ -52,17 +53,17 @@ public class ShoppingListHistoryFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            convertView = getLayoutInflater().inflate(R.layout.history_shopping_list_custom_layout, null);
-            TextView boughtProductName = convertView.findViewById(R.id.BoughtProductNameTextView);
-            TextView productPrice = convertView.findViewById(R.id.BoughtProductPriceTextView);
-            TextView purchaseDate = convertView.findViewById(R.id.DateOfPurchaseTextView);
-            TextView buyer = convertView.findViewById(R.id.BuyerTextView);
+            convertView = getLayoutInflater().inflate(R.layout.shopping_list_history_custom_layout, null);
+            TextView boughtProductName = convertView.findViewById(R.id.textViewPurchasedProductName);
+            TextView productPrice = convertView.findViewById(R.id.textViewPurchasedProductPrice);
+            TextView purchaseDate = convertView.findViewById(R.id.textViewPurchaseDate);
+            TextView buyer = convertView.findViewById(R.id.textViewBuyer);
 
-            boughtProductName.setText(AccountSettings.getHistoryProductsName().get(position));
-            productPrice.setText(String.format ("%.2f", AccountSettings.getHistoryProductsPrice().get(position)) + " PLN");
-            purchaseDate.setText(AccountSettings.getHistoryProductsDate().get(position).toString());
-            buyer.setText(AccountSettings.getHistoryProductsBuyer().get(position));
 
+            boughtProductName.setText(AccountSettings.getShoppingList().getPurchased().get(position).getName());
+            productPrice.setText(String.format ("%.2f", AccountSettings.getShoppingList().getPurchased().get(position).getPrice()) + " PLN");
+            purchaseDate.setText(AccountSettings.getShoppingList().getPurchased().get(position).getPurchaseDate());
+            buyer.setText(AccountSettings.getShoppingList().getPurchased().get(position).getBuyer());
 
             return convertView;
         }
