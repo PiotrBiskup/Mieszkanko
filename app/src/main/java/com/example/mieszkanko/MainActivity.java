@@ -1,5 +1,6 @@
 package com.example.mieszkanko;
 
+import com.example.mieszkanko.Models.Apartment;
 import com.example.mieszkanko.Models.ShoppingList;
 import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
 import android.accounts.Account;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
+    DatabaseReference mApartmentRef;
 
     String userIdOfThisUser;
 
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
+        mApartmentRef = mRootRef.child("apartments");
+
+        mRootRef.child("shopping_list").child("to_buy").child("-LeryFXDa3E0r9eNk4gx").removeValue();
 
 //        Bundle bundle = getIntent().getExtras();
 //        userIdOfThisUser = bundle.getString("messageUserId");
@@ -140,6 +145,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 catch (Exception e)
                 { }
 
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        mApartmentRef.child("nazwaa").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Apartment apart = dataSnapshot.getValue(Apartment.class);
+
+
+
+//                List<Product> toBuyList = new ArrayList<>();
+//
+//                AccountSettings.getShoppingList().setToBuy(toBuyList);
+//
+//                try {
+//                    FragmentManager fm = getSupportFragmentManager();
+//                    ShoppingListFragment fragment = (ShoppingListFragment) fm.findFragmentById(R.id.fragment_container);
+//                    fragment.getToBuyFragment().notifyAdapter();
+//                }
+//                catch (Exception e)
+//                { }
+
+                Log.d(TAG, "Apartment ----------------------- " + apart.getName() );
 
             }
 

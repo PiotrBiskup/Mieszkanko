@@ -12,6 +12,7 @@ public class Apartment {
     private Integer interval;
     private String name;
     private List<Room> rooms = null;
+    private List<String> roommates = null;
 
     public String getApart() {
         return apart;
@@ -43,6 +44,14 @@ public class Apartment {
 
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public List<String> getRoommates() {
+        return roommates;
+    }
+
+    public void setRoommates(List<String> roommates) {
+        this.roommates = roommates;
     }
 
 
