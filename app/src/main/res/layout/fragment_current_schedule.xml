@@ -25,7 +25,7 @@
     <GridView
         android:id="@+id/GridViewCurrentSchedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/CurrentScheduleID"
         android:numColumns="1"
         android:verticalSpacing="10dp"
@@ -33,6 +33,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
+        android:horizontalSpacing="10dp"
         />
 
 </RelativeLayout>

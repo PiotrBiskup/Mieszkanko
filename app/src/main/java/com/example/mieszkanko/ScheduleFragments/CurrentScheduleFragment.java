@@ -1,6 +1,7 @@
 package com.example.mieszkanko.ScheduleFragments;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -77,8 +78,12 @@ public class CurrentScheduleFragment extends Fragment {
             FloatingActionButton button = customView.findViewById(R.id.ScheduleFloatingActionButton);
 
             if(position != 0) {
-                nick.setShadowLayer();
                 button.hide();
+
+            } else {
+//                nick.setTypeface(nick.getTypeface(), Typeface.BOLD);
+//                room.setTypeface(room.getTypeface(), Typeface.BOLD);
+                customView.setBackground(getResources().getDrawable(R.drawable.shadow_primary_color));
             }
 
             nick.setText(nicks.get(position));
