@@ -14,4 +14,10 @@
     <string name="rooms">Rooms:</string>
     <string name="interval">Interval (amount of days):</string>
     <string name="buy">Buy</string>
+    <string name="current_schedule">Current schedule</string>
+    <string name="notCleanedUp">not cleaned up yet</string>
+    <string name="cleanedUp">already cleaned up</string>
+    <string name="noRoom">No room to clean up</string>
+
+
 </resources>
