@@ -2,12 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:text="Schedule"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/scheduleViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/scheduleViewPager"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/scheduleIndicator1"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/tab_indicator_selected"/>
+
+        <ImageView
+            android:id="@+id/scheduleIndicator2"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/tab_indicator_default"/>
+
+    </LinearLayout>
+
 </RelativeLayout>
