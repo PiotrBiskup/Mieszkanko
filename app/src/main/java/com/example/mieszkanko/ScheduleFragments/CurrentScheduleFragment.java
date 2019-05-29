@@ -40,7 +40,7 @@ public class CurrentScheduleFragment extends Fragment {
         rooms.add("kitchen");
         rooms.add("bathroom");
 
-        status.add(false);
+        status.add(true);
         status.add(true);
         status.add(false);
 
@@ -100,7 +100,8 @@ public class CurrentScheduleFragment extends Fragment {
             } else if (status.get(position)){
                 button.setImageResource(R.drawable.ic_clear_white_24dp);
                 roomStatus.setText(getString(R.string.cleanedUp));
-                roomStatus.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+//                roomStatus.setTextColor(Color.GREEN);
+                roomStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             } else if (!status.get(position)){
                 button.setImageResource(R.drawable.ic_done_white_24dp);
                 roomStatus.setText(getString(R.string.notCleanedUp));

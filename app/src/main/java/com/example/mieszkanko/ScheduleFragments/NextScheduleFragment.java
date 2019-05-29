@@ -1,5 +1,6 @@
 package com.example.mieszkanko.ScheduleFragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -111,11 +112,13 @@ public class NextScheduleFragment extends Fragment {
             } else if (status.get(position)){
                 button.setImageResource(R.drawable.ic_clear_white_24dp);
                 roomStatus.setText(getString(R.string.cleanedUp));
-                roomStatus.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+                roomStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
             } else if (!status.get(position)){
                 button.setImageResource(R.drawable.ic_done_white_24dp);
                 roomStatus.setText(getString(R.string.notCleanedUp));
                 roomStatus.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+
             }
 
 
