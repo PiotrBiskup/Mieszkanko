@@ -18,6 +18,7 @@
     <string name="notCleanedUp">not cleaned up yet</string>
     <string name="cleanedUp">already cleaned up</string>
     <string name="noRoom">No room to clean up</string>
+    <string name="next_schedule">Next schedule</string>
 
 
 </resources>

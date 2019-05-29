@@ -5,9 +5,36 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/NextScheduleID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next Schedule"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/next_schedule"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        />
+
+    <GridView
+        android:id="@+id/GridViewNextSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/NextScheduleID"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:numColumns="1"
+        android:clipToPadding="false"
+        android:paddingTop="5dp"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="35dp" />
 
 </RelativeLayout>
