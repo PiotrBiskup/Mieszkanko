@@ -19,6 +19,7 @@
     <string name="cleanedUp">already cleaned up</string>
     <string name="noRoom">No room to clean up</string>
     <string name="next_schedule">Next schedule</string>
+    <string name="shopping_list_summary">Shopping list summary</string>
 
 
 </resources>
