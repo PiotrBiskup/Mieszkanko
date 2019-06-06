@@ -32,6 +32,7 @@ public class CurrentScheduleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_current_schedule, null);
 
+
         nicks.add("Piotr");
         nicks.add("Czarek");
         nicks.add("Jedrzej");

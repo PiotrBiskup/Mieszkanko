@@ -1,7 +1,9 @@
 package com.example.mieszkanko;
 
 import com.example.mieszkanko.Models.Apartment;
+import com.example.mieszkanko.Models.Period;
 import com.example.mieszkanko.Models.Purchased;
+import com.example.mieszkanko.Models.Schedule;
 import com.example.mieszkanko.Models.User;
 import com.example.mieszkanko.Models.ShoppingList;
 import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
@@ -35,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -146,9 +149,37 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+    private void getScheduleFromDB(final String apartmentId){
+        mRootRef.child("schedule").child(apartmentId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User userek = dataSnapshot.getValue(User.class);
+                Schedule schedule = new Schedule();
+                List <Period> periodList= new ArrayList<>();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Period period = ds.getValue(Period.class);
+                    periodList.add(period);
+                }
+                schedule.setPeriodList(periodList);
+                Calendar c = Calendar.getInstance();
+                if(schedule.getPeriodList().get(schedule.getPeriodList().size()-1).getTimestamp()<c.getTimeInMillis())
+                {
+                    Period x = schedule.choosePersonToClean(AccountSettings.getApartment(),schedule);
+                    DatabaseReference Ref = mRootRef.child("schedule").child(apartmentId).push();
+                    Ref.setValue(x);
+                }
+                AccountSettings.setSchedule(schedule);
+
+                Log.w(TAG, "++++++++++++ add new Schedule  ++++++++ " +  AccountSettings.getSchedule().getPeriodList().size());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
 
     private void getApartmentFromDB() {
-        String apartmentId = AccountSettings.getUser().getApartment();
+        final String apartmentId = AccountSettings.getUser().getApartment();
         Log.w(TAG, "---------------------- AAAAAAAAAPPPPARTMENTTTTTTTTT  ------------- " +  apartmentId);
 
         mRootRef.child("apartments").child(apartmentId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -161,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     Log.w(TAG, "++++++++++++ roommie  ++++++++ " +  idik);
                     getUserFromDB(idik);
                 }
+                getScheduleFromDB(apartmentId);
             }
 
             @Override

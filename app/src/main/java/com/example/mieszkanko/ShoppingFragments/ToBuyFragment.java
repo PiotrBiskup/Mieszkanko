@@ -339,7 +339,7 @@ public class ToBuyFragment extends Fragment {
                     users.add("Wojtek");
                     Apartment a1 = new Apartment("ap1",roomList,users);
                     Schedule schedule = new Schedule(periodList);
-                    Period x = schedule.choosePersonToClean(a1,schedule);
+                    Period x = schedule.choosePersonToClean(AccountSettings.getApartment(),AccountSettings.getSchedule());
                     //dodawanie apartamentu przykład
 //                    Room r1 = new Room("r1","kuchnia","kuchnia");
 //                    Room r2 = new Room("r2","łazienka","łazienka");
@@ -351,7 +351,7 @@ public class ToBuyFragment extends Fragment {
 //                    Apartment apartment = new Apartment("ap2",7,"Mieszkanko na ruchanko",roomList);
 //                    DatabaseReference Ref = mApartmentRef.push();
 //                    Ref.setValue(apartment);
-                    DatabaseReference Ref = mScheduleRef.push();
+                    DatabaseReference Ref = mScheduleRef.child(AccountSettings.getUser().getApartment()).push();
                     Ref.setValue(x);
                     descriptionEdit.getText().clear();
                     productNameEdit.getText().clear();

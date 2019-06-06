@@ -22,7 +22,5 @@
 
 
     </application>
-    <uses-sdk
-        android:maxSdkVersion="17"
-        android:minSdkVersion="8" />
+
 </manifest>

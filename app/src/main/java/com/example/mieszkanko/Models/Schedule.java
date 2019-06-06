@@ -8,7 +8,7 @@ import java.util.List;
 public class Schedule {
 
 
-    private List<Period> periodList = null;
+    private List<Period> periodList = new ArrayList<>();
 
     public Schedule(List<Period> periodList) {
         this.periodList = periodList;
