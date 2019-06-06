@@ -42,7 +42,8 @@ public class ShoppingListStatFragment extends Fragment {
     private Double totalOutgoings = 0.0;
 
     final private String myFormat = "dd-MM-yyyy";
-    private Calendar myCalendar;
+    private Calendar myCalendarTo;
+    private Calendar myCalendarFrom;
     private DateFormat dateFormat;
     private String prevFromDate;
     private String prevToDate;
@@ -57,14 +58,15 @@ public class ShoppingListStatFragment extends Fragment {
         toDateTextView = view.findViewById(R.id.toDateTextView);
         gridView = view.findViewById(R.id.GridViewShoppingListStat);
 
-        myCalendar = Calendar.getInstance();
+        myCalendarFrom = Calendar.getInstance();
+        myCalendarTo = Calendar.getInstance();
         dateFormat = new SimpleDateFormat(myFormat, Locale.ENGLISH);
 
         setDefaultFromDate();
         setDefaultToDate();
 
-        for (String nick : AccountSettings.getApartment().getFlatmates()){
-            summaryList.add(new NickAndOutgoings(nick));
+        for (User nick : AccountSettings.getApartment().getRoommatesUser()){
+            summaryList.add(new NickAndOutgoings(nick.getNick()));
         }
 
         try{
@@ -82,10 +84,10 @@ public class ShoppingListStatFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
                 // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String thisDate = dateFormat.format(myCalendar.getTime());
+                myCalendarTo.set(Calendar.YEAR, year);
+                myCalendarTo.set(Calendar.MONTH, monthOfYear);
+                myCalendarTo.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String thisDate = dateFormat.format(myCalendarTo.getTime());
                 if(!thisDate.equals(prevToDate))
                 {
                     toDateTextView.setText(thisDate);
@@ -108,9 +110,9 @@ public class ShoppingListStatFragment extends Fragment {
         toDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getContext(), toDate, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(getContext(), toDate, myCalendarTo
+                        .get(Calendar.YEAR), myCalendarTo.get(Calendar.MONTH),
+                        myCalendarTo.get(Calendar.DAY_OF_MONTH)).show();
 
             }
         });
@@ -121,10 +123,10 @@ public class ShoppingListStatFragment extends Fragment {
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
                 // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String thisDate = dateFormat.format(myCalendar.getTime());
+                myCalendarFrom.set(Calendar.YEAR, year);
+                myCalendarFrom.set(Calendar.MONTH, monthOfYear);
+                myCalendarFrom.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String thisDate = dateFormat.format(myCalendarFrom.getTime());
                 if(!thisDate.equals(prevFromDate))
                 {
                     fromDateTextView.setText(thisDate);
@@ -147,9 +149,9 @@ public class ShoppingListStatFragment extends Fragment {
         fromDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getContext(), fromDate, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        1).show();
+                new DatePickerDialog(getContext(), fromDate, myCalendarFrom
+                        .get(Calendar.YEAR), myCalendarFrom.get(Calendar.MONTH),
+                        myCalendarFrom.get(Calendar.DAY_OF_MONTH)).show();
 
             }
         });
@@ -158,15 +160,16 @@ public class ShoppingListStatFragment extends Fragment {
     }
 
     private void setDefaultFromDate(){
-        String thisYear = Integer.toString(myCalendar.get(Calendar.YEAR));
-        String thisMonth = String.format("%02d", myCalendar.get(Calendar.MONTH) + 1);
+        myCalendarFrom.set(Calendar.DAY_OF_MONTH, 1);
+        String thisYear = Integer.toString(myCalendarFrom.get(Calendar.YEAR));
+        String thisMonth = String.format("%02d", myCalendarFrom.get(Calendar.MONTH) + 1);
         String fromdate = "01-" + thisMonth + "-" + thisYear;
         prevFromDate = fromdate;
         fromDateTextView.setText(fromdate);
     }
 
     private void setDefaultToDate(){
-        String todate = dateFormat.format(myCalendar.getTime());
+        String todate = dateFormat.format(myCalendarTo.getTime());
         prevToDate = todate;
         toDateTextView.setText(todate);
     }
@@ -182,7 +185,8 @@ public class ShoppingListStatFragment extends Fragment {
 
         for (Purchased x : AccountSettings.getShoppingList().getPurchased())
         {
-            Date purchaseDate = dateFormat.parse(x.getPurchaseDate());
+//            Date purchaseDate = dateFormat.parse(x.getPurchaseDate());
+            Date purchaseDate = dateFormat.parse(dateFormat.format(new Date(Long.parseLong(x.getPurchaseDate()))));
 
             if(!date1.after(purchaseDate) && !date2.before(purchaseDate))
             {
@@ -190,7 +194,7 @@ public class ShoppingListStatFragment extends Fragment {
 
                 for (NickAndOutgoings i : tempSummaryList)
                 {
-                    if(i.getNick() == x.getBuyer())
+                    if(i.getNick().equals(x.getBuyer()))
                     {
                         i.addToOutgoings(x.getPrice());
                         break;
@@ -231,7 +235,7 @@ public class ShoppingListStatFragment extends Fragment {
             {
                 customView.setBackground(getResources().getDrawable(R.drawable.shadow_primary_color));
                 nick.setText("In total");
-                outgoings.setText(String.format("%.2f", totalOutgoings));
+                outgoings.setText(String.format("%.2f", totalOutgoings) + " PLN");
                 outgoings.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
             } else {
