@@ -40,7 +40,7 @@ public class CurrentScheduleFragment extends Fragment {
         rooms.add("kitchen");
         rooms.add("bathroom");
 
-        status.add(false);
+        status.add(true);
         status.add(true);
         status.add(false);
 
@@ -69,20 +69,38 @@ public class CurrentScheduleFragment extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             View customView = getLayoutInflater().inflate(R.layout.schedule_row, null);
 
-            TextView nick = customView.findViewById(R.id.TextViewNickSchedule);
-            TextView room = customView.findViewById(R.id.TextViewRoomSchedule);
-            TextView roomStatus = customView.findViewById(R.id.TextViewCleanStatus);
-            FloatingActionButton button = customView.findViewById(R.id.ScheduleFloatingActionButton);
+            final TextView nick = customView.findViewById(R.id.TextViewNickSchedule);
+            final TextView room = customView.findViewById(R.id.TextViewRoomSchedule);
+            final TextView roomStatus = customView.findViewById(R.id.TextViewCleanStatus);
+            final FloatingActionButton button = customView.findViewById(R.id.ScheduleFloatingActionButton);
 
             if(position != 0) {
                 button.hide();
 
             } else {
-//                nick.setTypeface(nick.getTypeface(), Typeface.BOLD);
-//                room.setTypeface(room.getTypeface(), Typeface.BOLD);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!status.get(position)) {
+                            button.setImageResource(R.drawable.ic_clear_white_24dp);
+                            roomStatus.setText(getString(R.string.cleanedUp));
+                            roomStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                            status.set(position, true);
+                        } else
+                        {
+                            button.setImageResource(R.drawable.ic_done_white_24dp);
+                            roomStatus.setText(getString(R.string.notCleanedUp));
+                            roomStatus.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                            status.set(position, false);
+                        }
+
+
+                    }
+                });
                 customView.setBackground(getResources().getDrawable(R.drawable.shadow_primary_color));
             }
 
@@ -100,7 +118,8 @@ public class CurrentScheduleFragment extends Fragment {
             } else if (status.get(position)){
                 button.setImageResource(R.drawable.ic_clear_white_24dp);
                 roomStatus.setText(getString(R.string.cleanedUp));
-                roomStatus.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+//                roomStatus.setTextColor(Color.GREEN);
+                roomStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             } else if (!status.get(position)){
                 button.setImageResource(R.drawable.ic_done_white_24dp);
                 roomStatus.setText(getString(R.string.notCleanedUp));
