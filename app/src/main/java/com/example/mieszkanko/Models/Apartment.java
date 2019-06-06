@@ -7,53 +7,34 @@ import com.google.gson.annotations.SerializedName;
 
 
 public class Apartment {
-
-    private String apart;
-    private Integer interval;
+//  private String apart;
+//    private Integer interval;
     private String name;
     private List<Room> rooms = null;
-    private List<User>users;
+    private List<String>users;
     public Apartment() {
     }
 
-    public Apartment(String apart, Integer interval, String name, List<Room> rooms) {
-        this.apart = apart;
-        this.interval = interval;
+    public Apartment( String name, List<Room> rooms) {
+
         this.name = name;
         this.rooms = rooms;
     }
 
-    public Apartment(String apart, Integer interval, String name, List<Room> rooms, List<User> users) {
-        this.apart = apart;
-        this.interval = interval;
+    public Apartment( String name, List<Room> rooms, List<String> users) {
         this.name = name;
         this.rooms = rooms;
         this.users = users;
     }
 
-    public List<User> getUsers() {
+    public List<String> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<String> users) {
         this.users = users;
     }
 
-    public String getApart() {
-        return apart;
-    }
-
-    public void setApart(String apart) {
-        this.apart = apart;
-    }
-
-    public Integer getInterval() {
-        return interval;
-    }
-
-    public void setInterval(Integer interval) {
-        this.interval = interval;
-    }
 
     public String getName() {
         return name;

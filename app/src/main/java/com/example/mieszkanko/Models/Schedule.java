@@ -35,10 +35,10 @@ public class Schedule {
         if( schedule.getPeriodList().size()<1) {
             for (int i = 0; i < numberOfRooms; i++) {
                 if(apartment.getUsers().size()<=i){
-                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(),false,apartment.getUsers().get(i-apartment.getUsers().size()).getNick());
+                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(),false,apartment.getUsers().get(i-apartment.getUsers().size()));
                     roomsSchedules.add(roomsSchedule);
                 }else {
-                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(), false, apartment.getUsers().get(i).getNick());
+                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(), false, apartment.getUsers().get(i));
                     roomsSchedules.add(roomsSchedule);
                 }
 
@@ -50,11 +50,11 @@ public class Schedule {
         }else if(schedule.getPeriodList().size()< apartment.getUsers().size()){
             for (int i = 0; i < numberOfRooms; i++) {
                 if(i+schedule.getPeriodList().size()<apartment.getUsers().size()){
-                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(),false,apartment.getUsers().get(i+schedule.getPeriodList().size()).getNick());
+                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(),false,apartment.getUsers().get(i+schedule.getPeriodList().size()));
                     roomsSchedules.add(roomsSchedule);
                 }else {
                     System.out.println(i + schedule.getPeriodList().size() - apartment.getUsers().size());
-                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(), false, apartment.getUsers().get(i + schedule.getPeriodList().size() -apartment.getUsers().size()).getNick());
+                    Roomsschedule roomsSchedule = new Roomsschedule(apartment.getRooms().get(i).getRoom(), false, apartment.getUsers().get(i + schedule.getPeriodList().size() -apartment.getUsers().size()));
                     roomsSchedules.add(roomsSchedule);
                 }
             }

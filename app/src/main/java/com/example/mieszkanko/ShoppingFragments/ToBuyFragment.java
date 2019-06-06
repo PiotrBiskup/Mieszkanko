@@ -110,7 +110,10 @@ public class ToBuyFragment extends Fragment {
                     userList.add(macius);
                     Period period = new Period();
                     List<Period> periodList=new ArrayList<>();
-                    Apartment a1 = new Apartment("ap1",123,"czo",roomList,userList);
+                    List<String> users = new ArrayList<>();
+                    users.add("Maciek");
+                    users.add("Wojtek");
+                    Apartment a1 = new Apartment("ap1",roomList,users);
                     Schedule schedule = new Schedule(periodList);
                     Period x = schedule.choosePersonToClean(a1,schedule);
                     //dodawanie apartamentu przykład
