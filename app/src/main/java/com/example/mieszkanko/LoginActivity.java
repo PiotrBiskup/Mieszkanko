@@ -112,6 +112,13 @@ public class LoginActivity extends AppCompatActivity implements
         updateUI(currentUser);
 
         final String currentUserID = currentUser.getUid();
+        if(currentUser != null) {
+            try {
+                throw new Exception("dassaadasasddas");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         mUsersRef.addValueEventListener(new ValueEventListener() {
             @Override
