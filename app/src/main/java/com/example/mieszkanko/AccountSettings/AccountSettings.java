@@ -48,4 +48,5 @@ public class AccountSettings {
     public static void setUser(User user) {
         AccountSettings.user = user;
     }
+
 }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/ShoppingListStatTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/shopping_list_summary"
+        android:textSize="30sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/fromDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ShoppingListStatTitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="01-12-2018"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:background="?attr/selectableItemBackground"/>
+
+    <TextView
+        android:id="@+id/dashTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ShoppingListStatTitle"
+        android:layout_toEndOf="@+id/fromDateTextView"
+        android:layout_marginStart="10dp"
+        android:text="to"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        />
+
+    <TextView
+        android:id="@+id/toDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ShoppingListStatTitle"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/dashTextView"
+        android:text="22-12-2019"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:background="?attr/selectableItemBackground"/>
+
+    <GridView
+        android:id="@+id/GridViewShoppingListStat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/fromDateTextView"
+        android:numColumns="1"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:paddingTop="5dp"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="35dp"
+        android:clipToPadding="false"
+        />
+
+</RelativeLayout>

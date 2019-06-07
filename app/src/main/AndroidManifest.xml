@@ -20,7 +20,12 @@
         <activity android:name=".SplashScreen"></activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name">
+        </activity>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4965283920341222~7075139777"/>
+
     </application>
 
 </manifest>
