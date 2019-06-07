@@ -199,7 +199,8 @@ public class ToBuyFragment extends Fragment {
                                 String productName = productNameDialog.getText().toString();
                                 Double productPrice = Double.parseDouble(priceDialog.getText().toString());
                                 String purchaseDate = String.valueOf(myCalendar.getTimeInMillis());
-                                Purchased purch = new Purchased("userek", productName, productPrice, purchaseDate);
+                                String currentUserNick = AccountSettings.getUser().getNick();
+                                Purchased purch = new Purchased(currentUserNick, productName, productPrice, purchaseDate);
                                 DatabaseReference newRef = mShoppingListRef.child("purchased").push();
                                 newRef.setValue(purch);
                                 //dodaj do listy zakupionych i usun z listy tobuy (index to selectedItemIndex)

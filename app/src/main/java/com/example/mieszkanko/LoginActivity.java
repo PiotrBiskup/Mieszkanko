@@ -67,9 +67,6 @@ public class LoginActivity extends AppCompatActivity implements
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
-
     private FirebaseAuth mAuth;
 
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
@@ -82,9 +79,6 @@ public class LoginActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_login);
 
 //        FirebaseApp.initializeApp(getApplicationContext());
-
-        mStatusTextView = findViewById(R.id.status);
-        mDetailTextView = findViewById(R.id.detail);
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -109,7 +103,6 @@ public class LoginActivity extends AppCompatActivity implements
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
 
         final String currentUserID = currentUser.getUid();
         if(currentUser != null) {
@@ -160,7 +153,6 @@ public class LoginActivity extends AppCompatActivity implements
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithCredential:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(user);
                                 Intent intent = new Intent(LoginActivity.this, SplashScreen.class);
                                 intent.putExtra("messageUserId", user.getUid());
                                 startActivity(intent);
@@ -169,7 +161,6 @@ public class LoginActivity extends AppCompatActivity implements
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
 //                            Snackbar.make(findViewById(R.id.activity_main), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                                updateUI(null);
                             }
 
                             // ...
@@ -199,19 +190,6 @@ public class LoginActivity extends AppCompatActivity implements
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            mStatusTextView.setText("Zalogowano");
-            mDetailTextView.setText(user.getUid());
-        }
-        else {
-            mStatusTextView.setText("Niepowodzenie");
-            mDetailTextView.setText(null);
-
-        }
-
     }
 
 //    @Override
