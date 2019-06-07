@@ -1,7 +1,9 @@
 package com.example.mieszkanko;
 
 import com.example.mieszkanko.Models.Apartment;
+import com.example.mieszkanko.Models.Period;
 import com.example.mieszkanko.Models.Purchased;
+import com.example.mieszkanko.Models.Schedule;
 import com.example.mieszkanko.Models.User;
 import com.example.mieszkanko.Models.ShoppingList;
 import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
@@ -35,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
-
     String userIdOfThisUser;
 
     @Override
@@ -65,10 +67,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
+                currentUser.setKey(userIdOfThisUser);
                 AccountSettings.setUser(currentUser);
                 Log.w(TAG, "++++++++++++ NNNNNNIIIIIIIICCCCCCCCKKKKKKK  ++++++++ " +  AccountSettings.getUser().getNick());
                 Log.w(TAG, "++++++++++++ AAAAAAAAAPPPPARTMENT FROM UUUUUSER  ++++++++ " +  AccountSettings.getUser().getApartment());
-                getApartmentFromDB();
+
             }
 
             @Override
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        loadFragment(new ScheduleFragment());
+        loadFragment(new ProfileFragment());
     }
 
     private boolean loadFragment(Fragment fragment)
@@ -132,41 +135,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    private void getUserFromDB(String userId) {
 
-        mRootRef.child("users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User userek = dataSnapshot.getValue(User.class);
-                AccountSettings.getApartment().addRoomatesUser(userek);
-                Log.w(TAG, "++++++++++++ add new user  ++++++++ " +  userek.getNick());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
-
-    private void getApartmentFromDB() {
-        String apartmentId = AccountSettings.getUser().getApartment();
-        Log.w(TAG, "---------------------- AAAAAAAAAPPPPARTMENTTTTTTTTT  ------------- " +  apartmentId);
-
-        mRootRef.child("apartments").child(apartmentId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Apartment currentApartment = dataSnapshot.getValue(Apartment.class);
-                AccountSettings.setApartment(currentApartment);
-                Log.w(TAG, "++++++++++++ apartment  ++++++++ " +  AccountSettings.getApartment().getName());
-                for(String idik : AccountSettings.getApartment().getRoommates()) {
-                    Log.w(TAG, "++++++++++++ roommie  ++++++++ " +  idik);
-                    getUserFromDB(idik);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
 
     @Override
     protected void onStart() {

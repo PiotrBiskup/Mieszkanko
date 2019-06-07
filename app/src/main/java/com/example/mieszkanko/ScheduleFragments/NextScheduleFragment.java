@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,55 +16,81 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.example.mieszkanko.AccountSettings.AccountSettings;
+import com.example.mieszkanko.BottomNavigationBarFragments.ScheduleFragment;
+import com.example.mieszkanko.Models.Period;
+import com.example.mieszkanko.Models.Roomsschedule;
+import com.example.mieszkanko.Models.Schedule;
+import com.example.mieszkanko.Models.User;
 import com.example.mieszkanko.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class NextScheduleFragment extends Fragment {
-
     private GridView gridView;
     private List<String> nicks = new ArrayList<>();
     private List<String> rooms = new ArrayList<>();
     private List<Boolean> status = new ArrayList<>();
     private TextView title;
+    CustomAdapter customAdapter;
+    LayoutInflater inf;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        inf = inflater;
+        Period period = AccountSettings.getSchedule().choosePersonToClean(AccountSettings.getApartment(),AccountSettings.getSchedule());
+        for(Roomsschedule roomsschedule : period.getRoomsschedule())
+        {
+            Log.w("MOJE", "USER 1POBIERANYff " + roomsschedule.getUser());
+            //addUserFromDatabase(roomsschedule.getUser());
+            nicks.add(AccountSettings.getApartment().findUserByKey(roomsschedule.getUser()));
+            Log.w("MOJE", "USER 1POBIERANYff " + roomsschedule.getUser());
+            rooms.add(roomsschedule.getRoom());
+            Log.w("MOJE", "USER 1POBIERANYff " + roomsschedule.getUser());
+            status.add(roomsschedule.getStatus());
+
+        }
+//         List<String> nicks1 = new ArrayList<>();
+//        for(int i=0;i<nicks.size();i++)
+//        {
+//            if(AccountSettings.getUser().getNick().equals(nicks.get(i))){
+//               nicks1.add(nicks.get(i));
+//            }
+//        }
+//        for(int i=0;i<nicks.size();i++)
+//        {if(!AccountSettings.getUser().getNick().equals(nicks.get(i))){
+//            nicks1.add(nicks.get(i));
+//        }
+//
+//        }
+//        nicks=nicks1;
+        for(int i = 0; i < nicks.size(); i++){
+            if(AccountSettings.getUser().getNick().equals(nicks.get(i))){
+                Collections.swap(nicks, 0, i);
+                Collections.swap(rooms, 0, i);
+                Collections.swap(status, 0, i);
+            }
+        }
+        Log.w("MOJE", "Kriejt" );
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_next_schedule, null);
         title = rootView.findViewById(R.id.NextScheduleID);
-
-        nicks.add("Piotr");
-        nicks.add("Czarek");
-        nicks.add("Jedrzej");
-        nicks.add("Piotr");
-        nicks.add("Czarek");
-        nicks.add("Jedrzej");
-
-        rooms.add("kitchen");
-        rooms.add("bathroom");
-        rooms.add("living room");
-        rooms.add("kitchen");
-        rooms.add("bathroom");
-        rooms.add("living room");
-
-        status.add(true);
-        status.add(false);
-        status.add(true);
-        status.add(true);
-        status.add(false);
-        status.add(true);
-
         gridView = rootView.findViewById(R.id.GridViewNextSchedule);
-        CustomAdapter customAdapter = new CustomAdapter();
+        customAdapter = new CustomAdapter();
         gridView.setAdapter(customAdapter);
 
 
         return rootView;
     }
-
-
 
     private class CustomAdapter extends BaseAdapter {
 
@@ -121,8 +149,45 @@ public class NextScheduleFragment extends Fragment {
 
             }
 
-
             return customView;
         }
+
+    }
+
+    public void notifyAdapter()
+    {
+        customAdapter.notifyDataSetChanged();
+    }
+
+    public void setLists() {
+//        nicks.clear();
+//        rooms.clear();
+//        status.clear();
+
+//        gridView.setAdapter(null);
+
+        Period period = AccountSettings.getSchedule().choosePersonToClean(AccountSettings.getApartment(),AccountSettings.getSchedule());
+        for(Roomsschedule roomsschedule : period.getRoomsschedule())
+        {
+            Log.w("MOJE", "USER POBIERANYff " + roomsschedule.getUser());
+            //addUserFromDatabase(roomsschedule.getUser());
+            nicks.add(AccountSettings.getApartment().findUserByKey(roomsschedule.getUser()));
+            Log.w("MOJE", "USER POBIERANYff " + roomsschedule.getUser());
+            rooms.add(roomsschedule.getRoom());
+            Log.w("MOJE", "USER POBIERANYff " + roomsschedule.getUser());
+            status.add(roomsschedule.getStatus());
+
+        }
+
+//        nicks.add(0, "Marek");
+//        rooms.add(0, "laznia");
+//        status.add(0, false);
+
+
+        ViewGroup rootView = (ViewGroup) inf.inflate(R.layout.fragment_next_schedule, null);
+        title = rootView.findViewById(R.id.NextScheduleID);
+        gridView = rootView.findViewById(R.id.GridViewNextSchedule);
+        customAdapter = new CustomAdapter();
+        gridView.setAdapter(customAdapter);
     }
 }

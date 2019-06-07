@@ -6,9 +6,13 @@ public class Room {
     private String description;
     private String name;
 
+
     public Room(String description, String name) {
         this.description = description;
         this.name = name;
+
+
+
     }
 
     public Room() {}

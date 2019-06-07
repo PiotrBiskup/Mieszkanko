@@ -34,8 +34,14 @@ import android.widget.Toast;
 
 import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.MainActivity;
+import com.example.mieszkanko.Models.Apartment;
+import com.example.mieszkanko.Models.Period;
 import com.example.mieszkanko.Models.Product;
 import com.example.mieszkanko.Models.Purchased;
+import com.example.mieszkanko.Models.Room;
+import com.example.mieszkanko.Models.Roomsschedule;
+import com.example.mieszkanko.Models.Schedule;
+import com.example.mieszkanko.Models.User;
 import com.example.mieszkanko.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,7 +70,8 @@ public class ToBuyFragment extends Fragment {
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
-
+    DatabaseReference mApartmentRef;
+    DatabaseReference mScheduleRef;
     CustomAdapter customAdapter;
     ListView toBuyListView;
 
@@ -81,8 +88,14 @@ public class ToBuyFragment extends Fragment {
         mRootRef = FirebaseDatabase.getInstance().getReference();
         mShoppingListRef = mRootRef.child("shopping_list");
 
+
         buyButton = view.findViewById(R.id.floatingButtonBuy);
         deleteButton = view.findViewById(R.id.floatingButtonDelete);
+
+        mApartmentRef=mRootRef.child("apartments");
+        mScheduleRef=mRootRef.child("schedule");
+
+
         productNameEdit = view.findViewById(R.id.productNameEditText);
         descriptionEdit = view.findViewById(R.id.descriptionEditText);
         addProductImage = view.findViewById(R.id.addProductImageView);
@@ -310,8 +323,36 @@ public class ToBuyFragment extends Fragment {
                     Product product = new Product(productName, productDescription);
                     DatabaseReference newRef = mShoppingListRef.child("to_buy").push();
                     newRef.setValue(product);
-
-
+                    List<String>apartmenty = new ArrayList<>();
+                    apartmenty.add("ap1");
+                    Room r1=new Room("r1","r1");
+                    Room r2 = new Room("r2","r2");
+                    List<List<Roomsschedule>> rs = new ArrayList<>();
+                    List<User> userList= new ArrayList<>();
+                    List<Room> roomList= new ArrayList<>();
+                    roomList.add(r1);
+                    roomList.add(r2);
+                    Period period = new Period();
+                    List<Period> periodList=new ArrayList<>();
+                    List<String> users = new ArrayList<>();
+                    users.add("Maciek");
+                    users.add("Wojtek");
+                    Apartment a1 = new Apartment("ap1",roomList,users);
+                    Schedule schedule = new Schedule(periodList);
+                    Period x = schedule.choosePersonToClean(AccountSettings.getApartment(),AccountSettings.getSchedule());
+                    //dodawanie apartamentu przykład
+//                    Room r1 = new Room("r1","kuchnia","kuchnia");
+//                    Room r2 = new Room("r2","łazienka","łazienka");
+//                    Room r3 = new Room("r3","salon","salon");
+//                    List<Room> roomList = new ArrayList<>();
+//                    roomList.add(r1);
+//                    roomList.add(r2);
+//                    roomList.add(r3);
+//                    Apartment apartment = new Apartment("ap2",7,"Mieszkanko na ruchanko",roomList);
+//                    DatabaseReference Ref = mApartmentRef.push();
+//                    Ref.setValue(apartment);
+                    DatabaseReference Ref = mScheduleRef.child(AccountSettings.getUser().getApartment()).push();
+                    Ref.setValue(x);
                     descriptionEdit.getText().clear();
                     productNameEdit.getText().clear();
 
