@@ -39,7 +39,7 @@ public class CurrentScheduleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootRef = FirebaseDatabase.getInstance().getReference();
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_current_schedule, null);
-
+        Log.w("TWOJE", "USER 111POBIERANYff " + AccountSettings.getUser().getApartment());
         Period period = AccountSettings.getSchedule().getPeriodList().get(AccountSettings.getSchedule().getPeriodList().size()-1);
         for(Roomsschedule roomsschedule : period.getRoomsschedule())
         {

@@ -57,9 +57,9 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 try {
 
-                    sleep(2000);
+                    sleep(3000);
                     getApartmentFromDB();
-                    sleep(2000);
+                    sleep(3000);
 
 
 
@@ -96,6 +96,7 @@ public class SplashScreen extends AppCompatActivity {
         mRootRef.child("schedule").child(apartmentId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.w(TAG, "++++++++++++ MYRYRYRY ++++++++ " + AccountSettings.getSchedule().getPeriodList().size());
                 User userek = dataSnapshot.getValue(User.class);
                 Schedule schedule = new Schedule();
                 List<Period> periodList= new ArrayList<>();
@@ -131,7 +132,8 @@ public class SplashScreen extends AppCompatActivity {
     private void getApartmentFromDB() {
         final String apartmentId = AccountSettings.getUser().getApartment();
         Log.w(TAG, "---------------------- AAAAAAAAAPPPPARTMENTTTTTTTTT  ------------- " +  apartmentId);
-
+        Log.w(TAG, "PARARARA " + AccountSettings.getSchedule().getPeriodList().size()+ apartmentId);
+        getScheduleFromDB(apartmentId);
         mRootRef.child("apartments").child(apartmentId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -142,7 +144,8 @@ public class SplashScreen extends AppCompatActivity {
                     Log.w(TAG, "++++++++++++ roommie  ++++++++ " +  idik);
                     getUserFromDB(idik);
                 }
-                getScheduleFromDB(apartmentId);
+
+
 
                 try {
                     Log.w(TAG, "TRY START 1" );
