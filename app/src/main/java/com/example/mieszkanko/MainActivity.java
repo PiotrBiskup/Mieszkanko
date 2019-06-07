@@ -32,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -148,18 +149,39 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void getApartmentFromDB() {
-        String apartmentId = AccountSettings.getUser().getApartment();
-        Log.w(TAG, "---------------------- AAAAAAAAAPPPPARTMENTTTTTTTTT  ------------- " +  apartmentId);
+                String apartmentId = AccountSettings.getUser().getApartment();
 
-        mRootRef.child("apartments").child(apartmentId).addListenerForSingleValueEvent(new ValueEventListener() {
+                mRootRef.child("apartments").child(apartmentId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Apartment currentApartment = dataSnapshot.getValue(Apartment.class);
+                        AccountSettings.setApartment(currentApartment);
+//                Log.w(TAG, "++++++++++++ apartment  ++++++++ " +  AccountSettings.getApartment().getName());
+                        for(String idik : AccountSettings.getApartment().getRoommates()) {
+//                    Log.w(TAG, "++++++++++++ roommie  ++++++++ " +  idik);
+                            getUserFromDB(idik);
+                        }
+                    }
+
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Apartment currentApartment = dataSnapshot.getValue(Apartment.class);
-                AccountSettings.setApartment(currentApartment);
-                Log.w(TAG, "++++++++++++ apartment  ++++++++ " +  AccountSettings.getApartment().getName());
-                for(String idik : AccountSettings.getApartment().getRoommates()) {
-                    Log.w(TAG, "++++++++++++ roommie  ++++++++ " +  idik);
-                    getUserFromDB(idik);
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    private void getPurchasedFromDateToDate(String startDate, String endDate) {
+//        List<Purchased> listPur = new ArrayList<Purchased>();
+//        String apartmentId = AccountSettings.getUser().getApartment();
+        DatabaseReference reference = mShoppingListRef.child("purchased");
+        Query query =  mShoppingListRef.child("purchased").orderByChild("purchaseDate").startAt(startDate).endAt(endDate);
+
+        Log.w(TAG, "prooooooooooooooooooooooooooooodi starti ");
+
+        mShoppingListRef.child("purchased").orderByChild("purchaseDate").startAt(startDate).endAt(endDate).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot child : ds.getChildren()) {
+                    Purchased purch = child.getValue(Purchased.class);
+                    Log.w(TAG, "++++++++++++ prdiiiiiiiiiiiik  ++++++++ " +  purch.getPurchaseDate());
                 }
             }
 
@@ -231,6 +253,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+
+        getPurchasedFromDateToDate("1559840814084", "1659071608885");
     }
 
 //    @Override

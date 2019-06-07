@@ -19,7 +19,8 @@ import com.example.mieszkanko.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NextScheduleFragment extends Fragment {
+public class
+NextScheduleFragment extends Fragment {
 
     private GridView gridView;
     private List<String> nicks = new ArrayList<>();
@@ -36,20 +37,11 @@ public class NextScheduleFragment extends Fragment {
         nicks.add("Piotr");
         nicks.add("Czarek");
         nicks.add("Jedrzej");
-        nicks.add("Piotr");
-        nicks.add("Czarek");
-        nicks.add("Jedrzej");
 
         rooms.add("kitchen");
         rooms.add("bathroom");
         rooms.add("living room");
-        rooms.add("kitchen");
-        rooms.add("bathroom");
-        rooms.add("living room");
 
-        status.add(true);
-        status.add(false);
-        status.add(true);
         status.add(true);
         status.add(false);
         status.add(true);
