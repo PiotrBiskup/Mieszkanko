@@ -5,6 +5,15 @@ import java.util.List;
 public class Period {
     private List<Roomsschedule> roomsschedule = null;
     private long timestamp;
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public Period() {
     }

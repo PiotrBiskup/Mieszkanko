@@ -36,6 +36,7 @@ public class Apartment {
     }
 
     public Apartment() {}
+
     public String findUserByKey(String key){
         for(User user :getRoommatesUser())
         {
@@ -44,6 +45,7 @@ public class Apartment {
         }
         return null;
     }
+
     public List<String> getRoommates() {
         return roommates;
     }

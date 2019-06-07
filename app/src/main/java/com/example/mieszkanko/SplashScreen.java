@@ -101,6 +101,7 @@ public class SplashScreen extends AppCompatActivity {
                 List<Period> periodList= new ArrayList<>();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Period period = ds.getValue(Period.class);
+                    period.setKey(ds.getKey());
                     periodList.add(period);
                 }
                 schedule.setPeriodList(periodList);
@@ -112,13 +113,13 @@ public class SplashScreen extends AppCompatActivity {
                     Ref.setValue(x);
                 }
                 else if (schedule.getPeriodList().get(schedule.getPeriodList().size() - 1).getTimestamp() < c.getTimeInMillis()) {
-                        Period x = schedule.choosePersonToClean(AccountSettings.getApartment(), schedule);
-                        DatabaseReference Ref = mRootRef.child("schedule").child(apartmentId).push();
-                        Ref.setValue(x);
-                    }
-                    AccountSettings.setSchedule(schedule);
+                    Period x = schedule.choosePersonToClean(AccountSettings.getApartment(), schedule);
+                    DatabaseReference Ref = mRootRef.child("schedule").child(apartmentId).push();
+                    Ref.setValue(x);
+                }
+                AccountSettings.setSchedule(schedule);
 
-                    Log.w(TAG, "++++++++++++ add new Schedule  ++++++++ " + AccountSettings.getSchedule().getPeriodList().size());
+                Log.w(TAG, "++++++++++++ add new Schedule  ++++++++ " + AccountSettings.getSchedule().getPeriodList().size());
 
             }
 

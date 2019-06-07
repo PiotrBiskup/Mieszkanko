@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
+                currentUser.setKey(userIdOfThisUser);
                 AccountSettings.setUser(currentUser);
                 Log.w(TAG, "++++++++++++ NNNNNNIIIIIIIICCCCCCCCKKKKKKK  ++++++++ " +  AccountSettings.getUser().getNick());
                 Log.w(TAG, "++++++++++++ AAAAAAAAAPPPPARTMENT FROM UUUUUSER  ++++++++ " +  AccountSettings.getUser().getApartment());

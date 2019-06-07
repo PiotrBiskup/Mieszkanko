@@ -19,6 +19,8 @@ import com.example.mieszkanko.AccountSettings.AccountSettings;
 import com.example.mieszkanko.Models.Period;
 import com.example.mieszkanko.Models.Roomsschedule;
 import com.example.mieszkanko.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.collection.LLRBNode;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CurrentScheduleFragment extends Fragment {
-
+    DatabaseReference mRootRef;
     private GridView gridView;
     private List<String> nicks = new ArrayList<>();
     private List<String> rooms = new ArrayList<>();
@@ -35,6 +37,7 @@ public class CurrentScheduleFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootRef = FirebaseDatabase.getInstance().getReference();
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_current_schedule, null);
 
         Period period = AccountSettings.getSchedule().getPeriodList().get(AccountSettings.getSchedule().getPeriodList().size()-1);
@@ -98,21 +101,33 @@ public class CurrentScheduleFragment extends Fragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                    Period currentPeriod = AccountSettings.getSchedule().getPeriodList().get(AccountSettings.getSchedule().getPeriodList().size()-1);
+                    String periodKey = currentPeriod.getKey();
+                    String apartmentId = AccountSettings.getUser().getApartment();
+                    int userIndex = AccountSettings.getSchedule().findIndexOfUserInLastPeriod(AccountSettings.getUser().getKey());
+                    List<Roomsschedule> rs = currentPeriod.getRoomsschedule();
+                    Roomsschedule newState = rs.get(userIndex);
+                    newState.setStatus(true);
+                    rs.set(userIndex, newState);
 
-                        if (!status.get(position)) {
-                            button.setImageResource(R.drawable.ic_clear_white_24dp);
-                            roomStatus.setText(getString(R.string.cleanedUp));
-                            roomStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            status.set(position, true);
-                        } else
-                        {
-                            button.setImageResource(R.drawable.ic_done_white_24dp);
-                            roomStatus.setText(getString(R.string.notCleanedUp));
-                            roomStatus.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-                            status.set(position, false);
-                        }
-
-
+                    if (!status.get(position)) {
+                        button.setImageResource(R.drawable.ic_clear_white_24dp);
+                        roomStatus.setText(getString(R.string.cleanedUp));
+                        roomStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        status.set(position, true);
+                        newState.setStatus(true);
+                        rs.set(userIndex, newState);
+                        mRootRef.child("schedule").child(apartmentId).child(periodKey).child("roomsschedule").setValue(rs);
+                    } else
+                    {
+                        button.setImageResource(R.drawable.ic_done_white_24dp);
+                        roomStatus.setText(getString(R.string.notCleanedUp));
+                        roomStatus.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                        status.set(position, false);
+                        newState.setStatus(false);
+                        rs.set(userIndex, newState);
+                        mRootRef.child("schedule").child(apartmentId).child(periodKey).child("roomsschedule").setValue(rs);
+                    }
                     }
                 });
                 customView.setBackground(getResources().getDrawable(R.drawable.shadow_primary_color));
