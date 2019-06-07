@@ -49,7 +49,7 @@ public class ScheduleStatFragment extends Fragment {
             summarySList.add(new NickAndAmountOfCleanedUp(user.getNick()));
         }
 
-        for(int i = 0; i < schedule.getRoomsschedule().size(); i++)
+        for(int i = 0; i < AccountSettings.getApartment().getRoommatesUser().size(); i++)
         {
             spinnerList.add(Integer.toString(i + 1));
         }

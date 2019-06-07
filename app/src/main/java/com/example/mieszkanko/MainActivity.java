@@ -28,6 +28,9 @@ import com.example.mieszkanko.BottomNavigationBarFragments.ShoppingListFragment;
 import com.example.mieszkanko.BottomNavigationBarFragments.StatisticsFragment;
 import com.example.mieszkanko.Models.Product;
 import com.example.mieszkanko.ShoppingFragments.ToBuyFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,13 +48,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
-
+    private AdView mAdView;
     String userIdOfThisUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        //modul reklamowy
+
+        MobileAds.initialize(this, "ca-app-pub-4965283920341222~7075139777");
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
 
         //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mRootRef = FirebaseDatabase.getInstance().getReference();
