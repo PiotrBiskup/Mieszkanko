@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.accounttransfer.AccountTransfer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class AccountSettings {
 
@@ -19,7 +20,7 @@ public class AccountSettings {
     public static ShoppingList getShoppingList() {
         return shoppingList;
     }
-
+    public static CountDownLatch countdown = new CountDownLatch(1);
     public static Schedule getSchedule() {
         return schedule;
     }

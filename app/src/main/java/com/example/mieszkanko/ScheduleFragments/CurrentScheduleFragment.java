@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,14 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.example.mieszkanko.AccountSettings.AccountSettings;
+import com.example.mieszkanko.Models.Period;
+import com.example.mieszkanko.Models.Roomsschedule;
 import com.example.mieszkanko.R;
 import com.google.firebase.database.collection.LLRBNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CurrentScheduleFragment extends Fragment {
@@ -32,18 +37,26 @@ public class CurrentScheduleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_current_schedule, null);
 
+        Period period = AccountSettings.getSchedule().getPeriodList().get(AccountSettings.getSchedule().getPeriodList().size()-1);
+        for(Roomsschedule roomsschedule : period.getRoomsschedule())
+        {
+            Log.w("MOJE", "USER 111POBIERANYff " + roomsschedule.getUser());
+            //addUserFromDatabase(roomsschedule.getUser());
+            nicks.add(AccountSettings.getApartment().findUserByKey(roomsschedule.getUser()));
+            Log.w("MOJE", "USER 111POBIERANYff " + roomsschedule.getUser());
+            rooms.add(roomsschedule.getRoom());
+            Log.w("MOJE", "USER 111POBIERANYff " + roomsschedule.getUser());
+            status.add(roomsschedule.getStatus());
 
-        nicks.add("Piotr");
-        nicks.add("Czarek");
-        nicks.add("Jedrzej");
+        }
 
-        rooms.add("living room");
-        rooms.add("kitchen");
-        rooms.add("bathroom");
-
-        status.add(true);
-        status.add(true);
-        status.add(false);
+        for(int i = 0; i < nicks.size(); i++){
+            if(AccountSettings.getUser().getNick().equals(nicks.get(i))){
+                Collections.swap(nicks, 0, i);
+                Collections.swap(rooms, 0, i);
+                Collections.swap(status, 0, i);
+            }
+        }
 
         gridView = rootView.findViewById(R.id.GridViewCurrentSchedule);
         CustomAdapter customAdapter = new CustomAdapter();
@@ -131,4 +144,5 @@ public class CurrentScheduleFragment extends Fragment {
             return customView;
         }
     }
+
 }

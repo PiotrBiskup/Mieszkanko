@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     DatabaseReference mRootRef;
     DatabaseReference mShoppingListRef;
-
     String userIdOfThisUser;
 
     @Override
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 AccountSettings.setUser(currentUser);
                 Log.w(TAG, "++++++++++++ NNNNNNIIIIIIIICCCCCCCCKKKKKKK  ++++++++ " +  AccountSettings.getUser().getNick());
                 Log.w(TAG, "++++++++++++ AAAAAAAAAPPPPARTMENT FROM UUUUUSER  ++++++++ " +  AccountSettings.getUser().getApartment());
-                getApartmentFromDB();
+
             }
 
             @Override
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        loadFragment(new ScheduleFragment());
+        loadFragment(new ProfileFragment());
     }
 
     private boolean loadFragment(Fragment fragment)
@@ -135,70 +134,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    private void getUserFromDB(String userId) {
 
-        mRootRef.child("users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User userek = dataSnapshot.getValue(User.class);
-                AccountSettings.getApartment().addRoomatesUser(userek);
-                Log.w(TAG, "++++++++++++ add new user  ++++++++ " +  userek.getNick());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
-    private void getScheduleFromDB(final String apartmentId){
-        mRootRef.child("schedule").child(apartmentId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User userek = dataSnapshot.getValue(User.class);
-                Schedule schedule = new Schedule();
-                List <Period> periodList= new ArrayList<>();
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Period period = ds.getValue(Period.class);
-                    periodList.add(period);
-                }
-                schedule.setPeriodList(periodList);
-                Calendar c = Calendar.getInstance();
-                if(schedule.getPeriodList().get(schedule.getPeriodList().size()-1).getTimestamp()<c.getTimeInMillis())
-                {
-                    Period x = schedule.choosePersonToClean(AccountSettings.getApartment(),schedule);
-                    DatabaseReference Ref = mRootRef.child("schedule").child(apartmentId).push();
-                    Ref.setValue(x);
-                }
-                AccountSettings.setSchedule(schedule);
-
-                Log.w(TAG, "++++++++++++ add new Schedule  ++++++++ " +  AccountSettings.getSchedule().getPeriodList().size());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
-
-    private void getApartmentFromDB() {
-        final String apartmentId = AccountSettings.getUser().getApartment();
-        Log.w(TAG, "---------------------- AAAAAAAAAPPPPARTMENTTTTTTTTT  ------------- " +  apartmentId);
-
-        mRootRef.child("apartments").child(apartmentId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Apartment currentApartment = dataSnapshot.getValue(Apartment.class);
-                AccountSettings.setApartment(currentApartment);
-                Log.w(TAG, "++++++++++++ apartment  ++++++++ " +  AccountSettings.getApartment().getName());
-                for(String idik : AccountSettings.getApartment().getRoommates()) {
-                    Log.w(TAG, "++++++++++++ roommie  ++++++++ " +  idik);
-                    getUserFromDB(idik);
-                }
-                getScheduleFromDB(apartmentId);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
 
     @Override
     protected void onStart() {

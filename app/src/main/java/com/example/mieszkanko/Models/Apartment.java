@@ -36,7 +36,14 @@ public class Apartment {
     }
 
     public Apartment() {}
-
+    public String findUserByKey(String key){
+        for(User user :getRoommatesUser())
+        {
+            if(user.getKey().equals(key))
+                return user.getNick();
+        }
+        return null;
+    }
     public List<String> getRoommates() {
         return roommates;
     }
