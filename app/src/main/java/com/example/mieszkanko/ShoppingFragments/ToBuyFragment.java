@@ -86,7 +86,7 @@ public class ToBuyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shopping_list_to_buy, null);
 
         mRootRef = FirebaseDatabase.getInstance().getReference();
-        mShoppingListRef = mRootRef.child("shopping_list");
+        mShoppingListRef = mRootRef.child("shopping_list").child("ap1");
 
 
         buyButton = view.findViewById(R.id.floatingButtonBuy);

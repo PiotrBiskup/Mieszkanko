@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mRootRef = FirebaseDatabase.getInstance().getReference();
-        mShoppingListRef = mRootRef.child("shopping_list");
+        mShoppingListRef = mRootRef.child("shopping_list").child("ap1");
 
         Bundle bundle = getIntent().getExtras();
         userIdOfThisUser = bundle.getString("messageUserId");
