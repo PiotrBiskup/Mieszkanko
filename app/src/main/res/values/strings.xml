@@ -2,7 +2,7 @@
     <string name="app_name">Mieszkanko</string>
     <string name="title_home">Schedule</string>
     <string name="title_dashboard">Shopping</string>
-    <string name="title_notifications">Statistics</string>
+    <string name="title_notifications">Summary</string>
     <string name="title_profile">Profile</string>
     <string name="title_activity_shopping_list_to_buy">ShoppingListToBuyActivity</string>
     <string name="tab_text_1">To buy</string>

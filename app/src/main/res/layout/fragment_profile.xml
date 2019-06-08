@@ -67,7 +67,8 @@
                 android:layout_toEndOf="@+id/textViewFlatNameTitle"
                 android:layout_toRightOf="@+id/textViewFlatNameTitle"
                 android:text="Mieszkanko"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/textViewFlatMatesTitle"
