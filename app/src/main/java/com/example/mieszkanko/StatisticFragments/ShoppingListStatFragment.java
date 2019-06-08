@@ -175,8 +175,16 @@ public class ShoppingListStatFragment extends Fragment {
     }
 
 
+    private void clearUsersOutgoings(){
+        for (NickAndOutgoings x : summaryList)
+        {
+            x.clearOutgoings();
+        }
+    }
+
     private void countSummaryList() throws ParseException {
 
+        clearUsersOutgoings();
         List<NickAndOutgoings> tempSummaryList = summaryList;
         Double tempTotalOutgoings = 0.0;
 
@@ -267,6 +275,11 @@ public class ShoppingListStatFragment extends Fragment {
 
         public void addToOutgoings(Double money){
             this.outgoings += money;
+        }
+
+        public void clearOutgoings()
+        {
+            this.outgoings = 0.0;
         }
     }
 
