@@ -25,6 +25,16 @@ public class Schedule {
         this.periodList = periodList;
     }
 
+    public int findIndexOfUserInLastPeriod(String userId){
+        Period period = periodList.get(periodList.size()-1);
+        for(int i = 0; i <  period.getRoomsschedule().size(); i++) {
+            Roomsschedule rs = period.getRoomsschedule().get(i);
+            if(rs.getUser().equals(userId))
+                return i;
+        }
+        return -1;
+    }
+
     public static Period choosePersonToClean(Apartment apartment, Schedule schedule){
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 7);

@@ -86,7 +86,7 @@ public class ToBuyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shopping_list_to_buy, null);
 
         mRootRef = FirebaseDatabase.getInstance().getReference();
-        mShoppingListRef = mRootRef.child("shopping_list");
+        mShoppingListRef = mRootRef.child("shopping_list").child("ap1");
 
 
         buyButton = view.findViewById(R.id.floatingButtonBuy);
@@ -199,7 +199,8 @@ public class ToBuyFragment extends Fragment {
                                 String productName = productNameDialog.getText().toString();
                                 Double productPrice = Double.parseDouble(priceDialog.getText().toString());
                                 String purchaseDate = String.valueOf(myCalendar.getTimeInMillis());
-                                Purchased purch = new Purchased("userek", productName, productPrice, purchaseDate);
+                                String currentUserNick = AccountSettings.getUser().getNick();
+                                Purchased purch = new Purchased(currentUserNick, productName, productPrice, purchaseDate);
                                 DatabaseReference newRef = mShoppingListRef.child("purchased").push();
                                 newRef.setValue(purch);
                                 //dodaj do listy zakupionych i usun z listy tobuy (index to selectedItemIndex)

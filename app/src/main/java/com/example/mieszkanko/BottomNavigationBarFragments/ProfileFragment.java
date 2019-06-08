@@ -41,7 +41,6 @@ public class ProfileFragment extends Fragment {
         TextView flatname = view.findViewById(R.id.textViewFlatName);
         ListView flatmates = view.findViewById(R.id.listViewFlatMates);
         ListView rooms = view.findViewById(R.id.listViewRooms);
-        EditText interval = view.findViewById(R.id.textViewInterval);
 
         ArrayList<String> userNicknames = new ArrayList<>();
         for(User userek : AccountSettings.getApartment().getRoommatesUser()) {

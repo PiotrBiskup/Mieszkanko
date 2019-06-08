@@ -72,7 +72,7 @@ public class ShoppingListHistoryFragment extends Fragment {
 
             boughtProductName.setText(AccountSettings.getShoppingList().getPurchased().get(position).getName());
             productPrice.setText(String.format ("%.2f", AccountSettings.getShoppingList().getPurchased().get(position).getPrice()) + " PLN");
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
             Date date = new Date(Long.parseLong(AccountSettings.getShoppingList().getPurchased().get(position).getPurchaseDate()));
             purchaseDate.setText(sf.format(date));
             buyer.setText(AccountSettings.getShoppingList().getPurchased().get(position).getBuyer());
